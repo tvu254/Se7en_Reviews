@@ -1,12 +1,16 @@
 <template>
   <div id="app">
     <nav>
-      <div class="navigationLogo">
-        5373N_R3V13W5
-      </div>
-      <div class = "navigationUser">
-        {{ state.user.username }}
-      </div>
+      <router-link to="/">
+        <div class="navigationLogo">
+          5373N_R3V13W5
+        </div>
+      </router-link>
+      <router-link to="/user/1">
+        <div class = "navigationUser">
+          {{ state.user.username }}
+        </div>
+      </router-link>
     </nav>
     <router-view/>
   </div>

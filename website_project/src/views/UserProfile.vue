@@ -34,6 +34,7 @@
 <script>
 import { reactive, watch, computed } from 'vue';
 import { useRoute } from 'vue-router';
+import { users } from "../assets/users";
 import ReviewItem from "../components/ReviewItem.vue"
 import CreateReviewPanel from "../components/CreateReviewPanel.vue";
 
@@ -45,20 +46,11 @@ export default {
       const route = useRoute();
       const userId = computed(() => route.params.userId)
 
+    // if userId exists, get user from db, store like below
+
       const state = reactive({
         followers: 0,
-        user: {
-            id: 1,
-            username: 'Jakobeus',
-            firstName: 'Jacob',
-            lastName: 'Benz',
-            email: 'thejacobbenz@gmail.com',
-            isVerified: true,
-            reviews: [
-                { id: 1, type: 'Music', genre: 'Alternative/indie',  content: 'Rainbow Kitten Surprise is a great band.'},
-                { id: 2, type: 'Music', genre: 'Rock', content: "The Dark Side of the Moon is a fantastic album."}
-            ]
-        }
+        user: users[userId.value - 1] || users[0]
       })
 
       function addReview(newReviewList) {
@@ -68,7 +60,7 @@ export default {
         state.user.reviews.unshift( {
             id: state.user.reviews.length + 1,
             type: newReviewList[1],
-            genre: 'Kanye',
+            genre: 'WIP',
             content: newReviewList[0]
         });
     }
