@@ -1,11 +1,13 @@
 <template>
 <div class = "reviewItem" @click="favoriteReview(review.id)">
-    <div class = "userReview">
+    <div class = "userProfileReview">
         <div class = "userReviewItem">
             @{{ username }}
-            <div class = "reviewContext"> 
-                Type - {{ review.type }}
-                <div>Genre - {{ review.genre }} </div>
+        </div>
+        <div class = "reviewContext"> 
+            Type - {{ review.type }}
+            <div>
+                Genre - {{ review.genre }} 
             </div>
         </div>
         <div class = "reviewItemContent">
@@ -36,9 +38,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .reviewItem {
-    padding: 20px;
+    padding: 12px;
     background-color: #0d1424;
     border-radius: 5px;
     border: 1px solid #a7a7a7;
@@ -48,16 +50,18 @@ export default {
     width: 550px;
     margin: auto;
     margin-top: 5px;
-}
+    //font-size: 18px;   --> if I use serif instead of arial
 
-.reviewItem:hover {
-    transform: scale(1.1, 1.1);
-}
-.userReviewItem {
-     font-weight: bold;
- }
+    &:hover {
+        transform: scale(1.1, 1.1);
+    }
 
-.reviewContext {
-    font-weight: normal;
+    .userReviewItem {
+        font-weight: bold;
+    }
+
+    .reviewContext {
+        font-weight: normal;
+    }
 }
 </style>

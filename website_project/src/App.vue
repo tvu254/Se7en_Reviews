@@ -1,25 +1,61 @@
 <template>
-  <div id = "app">
-    <UserProfile/>
-    </div>
+  <div id="app">
+    <nav>
+      <div class="navigationLogo">
+        5373N_R3V13W5
+      </div>
+      <div class = "navigationUser">
+        {{ state.user.username }}
+      </div>
+    </nav>
+    <router-view/>
+  </div>
 </template>
 
 <script>
-import UserProfile from "./components/UserProfile.vue"
+import { reactive } from 'vue';
 
 export default {
   name: 'App',
-  components: { UserProfile }
+  setup() {
+    const state = reactive({
+      user: {
+        username: 'Jakobeus'
+      }
+    })
+
+    return {
+      state
+    }
+  }
 }
 </script>
 
-<style>
+<style lang="scss">
 #app {
- font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #b9b9b9;
+  color: #a7a7a7;
   min-height: 100vh;
   background-color: #0d1424;
+
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 5%;
+    background-color: #a7a7a7;
+    color: #0d1424;
+
+    .navigationLogo {
+      font-size: 34px;
+    }
+
+    .navigationUser {
+      font-weight: bold;
+      font-size: 20px;
+    }
+  }
 }
 </style>
