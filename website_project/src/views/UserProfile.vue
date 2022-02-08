@@ -2,7 +2,7 @@
     <div class = "userProfile">
       <div class="userProfileSidebar">
         <div class = "userProfilePanel">
-            <h1 class = "userProfileUsername">{{ state.user.firstName}} {{ state.user.lastName }}  -  @{{ state.user.username }}</h1>
+            <h1 class = "userProfileUsername">{{ state.user.firstName }} {{ state.user.lastName }}  -  @{{ state.user.username }}</h1>
             <h2> User ID: {{ userId }}</h2>
             <div class = "verifiedBadge" v-if="state.user.isVerified">
                 Verified
@@ -47,6 +47,7 @@ export default {
       const userId = computed(() => route.params.userId)
 
     // if userId exists, get user from db, store like below
+    // make 'users' below a js object and store its data. should be able to reference it just like I do below
 
       const state = reactive({
         followers: 0,
@@ -54,7 +55,6 @@ export default {
       })
 
       function addReview(newReviewList) {
-        //console.log(`${newReviewList} has gained a follower`),
         newReviewList[1] = newReviewList[1].charAt(0).toUpperCase() + newReviewList[1].slice(1);
 
         state.user.reviews.unshift( {
@@ -71,6 +71,24 @@ export default {
 
       function followUser() {
         state.followers++
+        getUsers() // should be on created
+        console.log("data");
+    }
+
+    
+      function getUsers() {
+        fetch('http://localhost:5000/user/1', {
+            method: "GET",
+
+        })
+
+        .then(resp => resp.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.log(error)      
+        })
     }
 
       watch(() => state.followers, (followers, oldFollowerCount) => { 
@@ -87,7 +105,6 @@ export default {
         userId,
     }
   },
-
 }
 </script>
 

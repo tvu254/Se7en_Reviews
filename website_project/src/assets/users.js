@@ -6,6 +6,7 @@ export const users = [
             "lastName": 'Benz',
             "email": 'thejacobbenz@gmail.com',
             "isVerified": true,
+            "isAdmin": true,
             "reviews": [
                 { "id": 1, "type": 'Music', "genre": 'Alternative/indie',  "content": 'Rainbow Kitten Surprise is a great band.'},
                 { "id": 2, "type": 'Music', "genre": 'Rock', "content": "The Dark Side of the Moon is a fantastic album."}
@@ -17,9 +18,10 @@ export const users = [
             "firstName": "J.",
             "lastName": "Cole",
             "email": null,
+            "isVerified": false,
             "isAdmin": false,
             "reviews": [
-                { "id": 1, "type": 'Music', "genre": 'Slander',  "content": 'Ay that Mit Romney guy sucks'},
+                { "id": 1, "type": 'Music', "genre": 'Slander',  "content": '“I’m so ahead of my time even when I rhyme about the future I be reminiscing" - Me, check it'},
                 { "id": 2, "type": 'Music', "genre": 'Rap', "content": "1v1 me Kendrick"}]
         },
         {
@@ -28,6 +30,7 @@ export const users = [
             "firstName": "Kendrick",
             "lastName": "Lamar",
             "email": null,
+            "isVerified": false,
             "isAdmin": false,
             "reviews": [
                 { "id": 1, "type": 'Music', "genre": 'Slander',  "content": '@JColeNC - waste of my time'},
@@ -39,6 +42,7 @@ export const users = [
             "firstName": "Bill",
             "lastName": "Burr",
             "email": null,
+            "isVerified": true,
             "isAdmin": true,
             "reviews": [
                 { "id": 1, "type": 'Music', "genre": 'Gospel',  "content": 'Gods everywhere, but I gotta go down (to church) to see him? Really? And hes mad at me down there, and I owe you money?'},
@@ -50,7 +54,8 @@ export const users = [
             "firstName": "Kanye",
             "lastName": "West",
             "email": null,
-            "isAdmin": true,
+            "isVerified": true,
+            "isAdmin": false,
             "reviews": [
                 { "id": 1, "type": 'Music', "genre": 'Rap',  "content": 'Killin yall n***** on that lyrical shit, mayonnaise colored Benz, I push miracle whips'},
                 { "id": 2, "type": 'Music', "genre": 'Rap', "content": "I AM A GOD... HURRY UP WITH MY DAMN CROISSANTS"}]

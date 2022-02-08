@@ -1,6 +1,6 @@
 <template>
-<form class = "createReviewPanel" @submit.prevent = "createNewReview" :class="{ '--exceeded': newReviewCharacterCt > 2000 }">
-    <label for = "newReview"> <strong>New Review</strong> - ({{newReviewCharacterCt}}/2000)  </label>
+<form class = "createReviewPanel" @submit.prevent = "createNewReview" :class="{ '--exceeded': newReviewCharacterCt > 2000 }">  <!-- stop sumbit button when > 2000 -->
+    <label for = "newReview"> <strong>New Review</strong> - ({{ newReviewCharacterCt }}/2000)  </label>
     <textarea id="newReview" rows = "4" v-model = "state.newReviewContent"/>
 
   <div class="createReviewPanelSubmit">

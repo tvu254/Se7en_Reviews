@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <h1> Welcome to 5373N_R3V13W5!</h1>
-    <h2> For user page, Profiles located temporarily at 'localhost:8000/user/userId' - My profile button is now clickable as a link  </h2>
+    <h1><strong>Welcome to uReviews!</strong></h1>
+    <h2> Working on connecting app.py, (dynamodb) to load the user reviews instead of the users.js file  </h2>
     <div class="userList">
       <router-link v-for="user in users" :to="{ name: 'UserProfile', params: {userId: user.id} }" :key="user.id">
         {{ user.username }}
