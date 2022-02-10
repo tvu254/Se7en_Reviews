@@ -41,9 +41,9 @@ export default {
 <style lang="scss" scoped>
 .reviewItem {
     padding: 12px;
-    background-color: #0d1424;
+    background-color: #ececec;
     border-radius: 5px;
-    border: 1px solid #a7a7a7;
+    border: 1px solid #0d1424;
     box-sizing: border-box;
     cursor: pointer;
     transition: all 0.24s ease;

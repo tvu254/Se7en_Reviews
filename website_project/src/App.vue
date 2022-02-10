@@ -6,6 +6,11 @@
           <strong>uReviews</strong>
         </div>
       </router-link>
+      <router-link to="/browse">
+        <div class="browse">
+          <strong>Browse Reviews</strong>
+        </div>
+      </router-link>
       <router-link to="/user/1">
         <div class = "navigationUser" v-if="user">
           {{ user.username }}
@@ -38,25 +43,46 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #a7a7a7;
+  color: #0d1424;
   min-height: 100vh;
-  background-color: #0d1424;
+  background-color: #ececec;
 
   nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px 5%;
-    background-color: #a7a7a7;
-    color: #0d1424;
+    background-color: #0d1424;
+    color: #d6d6d6;
 
     .navigationLogo {
       font-size: 34px;
+      
+      &:hover {
+        filter: brightness(150%);
+        transform: scale(1.01, 1.01);
+      }
     }
 
     .navigationUser {
       font-weight: bold;
-      font-size: 20px;
+      font-size: 18px;
+      
+      &:hover {
+        transform: scale(1.025, 1.025);
+        filter: brightness(150%);
+      }
+    }
+
+    .browse {
+      font-weight: normal;
+      font-size: 18px;
+      align-items: center;
+
+      &:hover {
+        transform: scale(1.025, 1.025);
+        filter: brightness(150%);
+      }
     }
   }
 }

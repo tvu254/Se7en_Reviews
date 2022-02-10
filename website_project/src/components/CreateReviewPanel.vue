@@ -1,5 +1,5 @@
 <template>
-<form class = "createReviewPanel" @submit.prevent = "createNewReview" :class="{ '--exceeded': newReviewCharacterCt > 2000 }">  <!-- stop sumbit button when > 2000 -->
+<form class = "createReviewPanel" @submit.prevent = "createNewReview" :class="{ '--exceeded': newReviewCharacterCt > 2000 }">  <!-- stop submit button when > 2000 -->
     <label for = "newReview"> <strong>New Review</strong> - ({{ newReviewCharacterCt }}/2000)  </label>
     <textarea id="newReview" rows = "4" v-model = "state.newReviewContent"/>
 
@@ -44,7 +44,7 @@ export default {
 
             if (state.newReviewContent && state.selectedReviewType !== 'choose') {
                 ctx.emit('add-review', newReviewList);
-                state.newReviewContent = '';
+                state.newReviewContent = '';             // eventually needs to not reset when characters > character limit
             }
             state.newReviewContent = '';
         }

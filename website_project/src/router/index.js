@@ -4,6 +4,7 @@ import { users } from "../assets/users";
 import Home from '../views/Home.vue';
 import UserProfile from "../views/UserProfile";
 import Admin from "../views/Admin";
+import Browse from "../views/Browse";
 
 const routes = [
   {
@@ -15,6 +16,11 @@ const routes = [
     path: '/user/:userId',    // uses userId as variable in URL
     name: 'UserProfile',
     component: UserProfile
+  },
+  {
+    path: '/browse',
+    name: 'Browse',
+    component: Browse
   },
   {
     path: '/admin',

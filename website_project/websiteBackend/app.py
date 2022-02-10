@@ -1,5 +1,5 @@
 from asyncio.windows_events import NULL
-import os, json, boto3, requests
+import os, json, boto3, requests        # look up what requests is for
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 
@@ -24,7 +24,7 @@ def userPage(userId):
     # get item from dynamodb table 'Users'
     userTable = dynamodb.Table('Users')
 
-    #print(userTable)
+    # get user from table and return json
     user = userTable.get_item(Key = {
         "UserID": str(userId)
     })
@@ -35,5 +35,5 @@ def adminPage():
     return NULL
     
 
-if __name__ == '__main__':  # true only if run directly
+if __name__ == '__main__':  # true only if run directly (not through flask run, from what I can tell)
     app.run(debug=True)
