@@ -21,7 +21,7 @@ export const users = [
             "isVerified": false,
             "isAdmin": false,
             "reviews": [
-                { "id": 1, "type": 'Music', "genre": 'Slander',  "content": '“I’m so ahead of my time even when I rhyme about the future I be reminiscing" - Me, check it'},
+                { "id": 1, "type": 'Music', "genre": 'Slander',  "content": '“I’m so ahead of my time when I rhyme about the future I be reminiscin\'" - Me, check it'},
                 { "id": 2, "type": 'Music', "genre": 'Rap', "content": "1v1 me Kendrick"}]
         },
         {

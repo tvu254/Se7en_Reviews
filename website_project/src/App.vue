@@ -11,11 +11,21 @@
           <strong>Browse Reviews</strong>
         </div>
       </router-link>
-      <router-link to="/user/1">
-        <div class = "navigationUser" v-if="user">
-          {{ user.username }}
+      <router-link to="/login">
+        <div class="login">
+          <strong>Login</strong>
         </div>
       </router-link>
+      <div class = "navigationUser" v-if="user">
+        <router-link to="/user/1">
+          {{ user.username }}
+        </router-link>
+      </div>
+      <div class = "loginRegister" v-else>
+        <router-link to="/login">
+          Login / Register
+        </router-link>
+      </div>
     </nav>
     <router-view/>
   </div>
@@ -71,10 +81,25 @@ export default {
       &:hover {
         transform: scale(1.025, 1.025);
         filter: brightness(150%);
+
+        .loginRegister {
+          font-size: 34px
+        }
       }
     }
 
     .browse {
+      font-weight: normal;
+      font-size: 18px;
+      align-items: center;
+
+      &:hover {
+        transform: scale(1.025, 1.025);
+        filter: brightness(150%);
+      }
+    }
+    
+    .login {
       font-weight: normal;
       font-size: 18px;
       align-items: center;

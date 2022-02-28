@@ -11,7 +11,10 @@ cors = CORS(app)
 dynamodb = boto3.resource("dynamodb")
 
 app.url_map.strict_slashes = False
-#SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY')
+#app.secret_key = os.urandom(12).hex()
+#app.config['SECRET_KEY'] = "Your_secret_string"
+
 
 # routes
 @app.route("/")
@@ -29,6 +32,36 @@ def userPage(userId):
         "UserID": str(userId)
     })
     return jsonify(user)
+
+@app.route("/login", methods = ['GET', 'POST'])
+def loginPage():
+    # get username from data sent
+    userInfoJSON = request.json
+    if(userInfoJSON.get("data").get("username") == ''):
+        return jsonify("Invalid Entry")
+
+    userInfo = dict(userInfoJSON)
+    username = userInfo.get("data").get("username")
+    password = userInfo.get("data").get("password")
+
+    # get item from dynamodb table 'Users'
+    userTable = dynamodb.Table('Users')
+
+    # get user from table and return json if found
+    user = userTable.get_item(Key = {
+        "UserID": username
+    })
+
+    # returns info/user based on data entered
+    if (len(user) == 2):                                                 # scuffed --> but works bc - if user, then theres two key entries in user dict
+        if (user.get("Item").get("Password") == password):
+            return jsonify(user)
+        else:
+            return jsonify("Invalid Password")
+    elif (len(user) == 1):
+        return jsonify("Failed to find user")
+    else:
+        return jsonify("Something went horribly wrong")
 
 @app.route("/admin")
 def adminPage():
