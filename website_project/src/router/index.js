@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import store from '../store';
-import { users } from "../assets/users";
 import Home from '../views/Home.vue';
 import UserProfile from "../views/UserProfile";
 import Admin from "../views/Admin";
@@ -47,10 +46,10 @@ const router = createRouter({
 // router guard
 router.beforeEach(async (to, from, next) => {
   const user = store.state.User.user;
-
+  console.log(user)
   if (!user) {
     // fetch user from db once db connected, this just sets state as first user - will eventually need to be connected to register/login
-    await store.dispatch('User/setUser', users[0])   // dispatches action 'setUser' with data users[0] from users.js file
+    await store.dispatch('User/setUser', user)   // dispatches action 'setUser' with data users[0] from users.js file
   }
 
   const isAdmin = true; // should actually reference user

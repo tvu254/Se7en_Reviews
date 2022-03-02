@@ -18,7 +18,7 @@
       </router-link>
       <div class = "navigationUser" v-if="user">
         <router-link to="/user/1">
-          {{ user.username }}
+          {{ user }}
         </router-link>
       </div>
       <div class = "loginRegister" v-else>
@@ -42,7 +42,8 @@ export default {
     const user = computed(() => store.state.User.user);
 
     return {
-      user
+      user,
+      store
     }
   }
 }

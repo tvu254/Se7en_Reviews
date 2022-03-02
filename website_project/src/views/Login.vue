@@ -22,18 +22,21 @@
 
 <script>
 import { reactive } from 'vue';
-import { users } from "../assets/users";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 export default {
   name: 'Login',
   setup() {
 
+    const store = useStore();
     const state = reactive({
       username:  '',
       password:  '',
       invalid: false
     })
     
+      const router = useRouter();
       const handleSubmit = async () => {
         const data = {
         username: state.username,
@@ -55,12 +58,21 @@ export default {
             state.invalid = true
           }
           else
-            console.log(data);  // set state here somehow
+            console.log(data);  // set state here somehow, maybe call another func
+            setUser(data);
         })
         .catch(function (error) {
           console.warn('Something went horribly wrong.', error);
         });
       };
+
+      const setUser = async (user) => {
+        await store.dispatch('User/setUser', user);
+        console.log("please")
+        console.log(user.Item.username)
+        console.log("please")
+        await router.push('/');
+      }
 
       //console.log(data);
     //}
@@ -68,7 +80,8 @@ export default {
     return {
       state,
       handleSubmit,
-      users
+      store,
+      setUser
     }
   }
 }
