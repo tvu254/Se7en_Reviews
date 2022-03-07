@@ -5,6 +5,7 @@ import UserProfile from "../views/UserProfile";
 import Admin from "../views/Admin";
 import Browse from "../views/Browse";
 import Login from "../views/Login";
+import Post from "../views/Post";
 
 const routes = [
   {
@@ -13,7 +14,7 @@ const routes = [
     component: Home
   },
   {
-    path: '/user/:userId',    // uses userId as variable in URL
+    path: '/user/:userId',    // uses username as variable in URL
     name: 'UserProfile',
     component: UserProfile
   },
@@ -26,6 +27,11 @@ const routes = [
     path: '/browse',
     name: 'Browse',
     component: Browse
+  },
+  {
+    path: '/post',
+    name: 'Post',
+    component: Post
   },
   {
     path: '/admin',

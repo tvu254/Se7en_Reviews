@@ -1,17 +1,6 @@
 <template>
     <div class = "userProfile">
       <div class="userProfileSidebar">
-        <div class = "userProfilePanel">
-            <h1 class = "userProfileUsername">{{ userNew.Item.firstName }} {{ userNew.Item.lastName }}</h1>
-            <h1> &nbsp; AKA </h1>
-            <h1> @{{ userId }} </h1>
-            <div class = "verifiedBadge" v-if="userNew.Item.isVerified">
-                Verified
-            </div>
-            <div class = "userProfileFollowerCt">
-                <strong> Followers: </strong> {{ state.followers }}
-            </div>
-        </div>
         <CreateReviewPanel @add-review="addReview"/>
     </div>
     <div class = "userReviewsWrapper">
@@ -31,11 +20,6 @@
                 Follow
             </button>
         </div>
-        <div class = "logoutButton">
-            <button v-on:click="logout">
-                Logout
-            </button>
-        </div>
     </div>
 </template>
 
@@ -43,7 +27,6 @@
 import { reactive, watch, computed } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
-//import { users } from "../assets/users";
 import ReviewItem from "../components/ReviewItem.vue"
 import CreateReviewPanel from "../components/CreateReviewPanel.vue";
 
@@ -59,15 +42,9 @@ export default {
       const userId = computed(() => route.params.userId)
 
 
-    // ?: get fetch to work off of mount/created. launch from there instead of follow button. --> For when Links are added to users, to redirect to a user page that isn't logged in
-    // 1: Fix the genre not working so we can save the reviews to the db
-    // 2: save reviews to db using POST. Send new review data from function addReview
-    // 3: Figure out how backend updates db, bc we can either send whole user or just the review here
-    // 4: Load these reviews into the home page as well as the browse page. 
-    // 5: Add a featured review and featured songs/albums/artists to home
-    // 7: Add Description / welcome message to home
-    // 8: Remove the post function in user profile page without website breaking
-
+    // 1: get fetch to work off of mount/created. launch from there instead of follow button. --> This is for loading a profile when clicked, while this .vue is for clicking on own profile
+    // 3: save reviews to db using POST. Send new review data from function addReview
+    // 4: Figure out how backend updates db, bc we can either send whole user or just the review here
 
       const state = reactive({
         followers: 0,

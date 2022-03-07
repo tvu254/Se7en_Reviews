@@ -3,7 +3,7 @@
     <nav>
       <router-link to="/">
         <div class="navigationLogo">
-          <strong>uReviews</strong>
+          <strong>uReview</strong>
         </div>
       </router-link>
       <router-link to="/browse">
@@ -11,16 +11,21 @@
           <strong>Browse Reviews</strong>
         </div>
       </router-link>
-      <router-link to="/login">
-        <div class="login">
-          <strong>Login</strong>
-        </div>
-      </router-link>
-      <div class = "navigationUser" v-if="user">
-        <router-link to="/user/1">
-          {{ user }}
+
+      <div class = "userPost" v-if="user">
+        <router-link to="/post">
+          <div class="post">
+            Post a Review
+          </div>
         </router-link>
       </div>
+
+      <div class = "navigationUser" v-if="user">
+        <router-link :to="`/user/${user.Item.UserID}`">
+          {{ user.Item.UserID }}
+        </router-link>
+      </div>
+
       <div class = "loginRegister" v-else>
         <router-link to="/login">
           Login / Register
@@ -37,13 +42,16 @@ import { computed } from 'vue';
 
 export default {
   name: 'App',
+
+
   setup() {
     const store = useStore();
     const user = computed(() => store.state.User.user);
 
+
+
     return {
       user,
-      store
     }
   }
 }
@@ -76,7 +84,7 @@ export default {
     }
 
     .navigationUser {
-      font-weight: bold;
+      font-weight: normal;
       font-size: 18px;
       
       &:hover {
@@ -84,13 +92,23 @@ export default {
         filter: brightness(150%);
 
         .loginRegister {
-          font-size: 34px
+          font-size: 34px;
         }
       }
     }
 
-    .browse {
+    .userPost {
       font-weight: normal;
+      font-size: 18px;
+      
+      &:hover {
+        transform: scale(1.025, 1.025);
+        filter: brightness(150%);
+      }
+    }
+
+    .browse {
+      font-weight: bold;
       font-size: 18px;
       align-items: center;
 

@@ -8,7 +8,7 @@
       <input type="text" class="formBox" v-model="state.username" placeholder="Username"/>
 
       <label>Password</label>
-      <input type="text" class="formBox" v-model="state.password" placeholder="Password"/>
+      <input type="password" class="formBox" v-model="state.password" placeholder="Password"/>
     </div>
 
     <div class="invalid" v-if="state.invalid">
@@ -68,9 +68,7 @@ export default {
 
       const setUser = async (user) => {
         await store.dispatch('User/setUser', user);
-        console.log("please")
         console.log(user.Item.username)
-        console.log("please")
         await router.push('/');
       }
 

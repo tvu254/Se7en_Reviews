@@ -1,7 +1,8 @@
 <template>
   <div class="home">
-    <h1><strong>Welcome to uReviews!</strong></h1>
-    <h2> Working on connecting app.py, (dynamodb) to load the user reviews instead of the users.js file  </h2>
+    <h1><strong>Welcome to uReview!</strong></h1>
+    <h2> Working on adding genre then saving reviews to the database, the links below don't work anymore because the profile page now loads from dynamodb. These will now have to be fetched.
+    </h2>
     <div class="userList">
       <router-link v-for="user in users" :to="{ name: 'UserProfile', params: {userId: user.id} }" :key="user.id">
         {{ user.username }}
