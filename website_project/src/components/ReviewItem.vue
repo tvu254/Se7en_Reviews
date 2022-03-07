@@ -2,7 +2,7 @@
 <div class = "reviewItem" @click="favoriteReview(review.id)">
     <div class = "userProfileReview">
         <div class = "userReviewItem">
-            @{{ username }}
+            {{ username }}
         </div>
         <div class = "reviewContext"> 
             Type - {{ review.type }}

@@ -4,7 +4,7 @@
         <div class = "userProfilePanel">
             <h1 class = "userProfileUsername">{{ userNew.Item.firstName }} {{ userNew.Item.lastName }}</h1>
             <h1> &nbsp; AKA </h1>
-            <h1> @{{ userId }} </h1>
+            <h1> {{ userId }} </h1>
             <div class = "verifiedBadge" v-if="userNew.Item.isVerified">
                 Verified
             </div>
@@ -16,9 +16,9 @@
     </div>
     <div class = "userReviewsWrapper">
         <div class = "reviewName">
-            @{{userNew.Item.UserID}}'s Reviews:
+            {{userNew.Item.UserID}}'s Reviews:
         </div> 
-        <ReviewItem 
+        <ReviewItem     
             v-for="review in userNew.Item.reviews" 
             :key = "review.id" 
             :username = "userNew.Item.UserID" 
@@ -43,13 +43,12 @@
 import { reactive, watch, computed } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
-//import { users } from "../assets/users";
 import ReviewItem from "../components/ReviewItem.vue"
 import CreateReviewPanel from "../components/CreateReviewPanel.vue";
 
 export default {
   name: 'UserProfile',
-  components: { CreateReviewPanel, ReviewItem },
+  components: { CreateReviewPanel, ReviewItem },    // the emit from userReviews probably making it to where i cant remove createReviewPanel
   setup() {
 
       const store = useStore();
@@ -67,6 +66,12 @@ export default {
     // 5: Add a featured review and featured songs/albums/artists to home
     // 7: Add Description / welcome message to home
     // 8: Remove the post function in user profile page without website breaking
+    // 9: Add security to passwords
+    // ?: Oh also figure out how props work
+    // ?: Add redirects to homepage/browse when necessary (right domain, wrong extension | or review that doesnt exist, etc)
+    // ?: Change userNew to user when other problem is fixed
+    // ?: Output invalid username / password to user instead of just to console
+    // else: Launch app as website, get user testing
 
 
       const state = reactive({
@@ -75,14 +80,41 @@ export default {
 
       function addReview(newReviewList) {
         newReviewList[1] = newReviewList[1].charAt(0).toUpperCase() + newReviewList[1].slice(1);
+        newReviewList[2] = newReviewList[2].charAt(0).toUpperCase() + newReviewList[2].slice(1);
 
         userNew.value.Item.reviews.unshift( {
             id: userNew.value.Item.reviews.length + 1,
             type: newReviewList[1],
-            genre: 'WIP',
+            genre: newReviewList[2],
             content: newReviewList[0]
         });
+        saveReview([userNew.value.Item.reviews[0], userNew.value.Item.UserID])
     }
+
+
+      const saveReview = async (review) => {
+        
+        await fetch('http://localhost:5000/post', {
+          method: 'POST',
+          body: JSON.stringify({ review }),
+          headers: {
+            'Content-type': 'application/json',
+          }
+        })
+        .then((response) => response.json())
+        .then(function (data) {
+          console.log(typeof(data))
+          if (typeof(data) == "string") {
+            console.log("invalid");   
+            state.invalid = true
+          }
+          else
+            console.log(data); 
+        })
+        .catch(function (error) {
+          console.warn('Something went horribly wrong.', error);
+        });
+      };
 
       function toggleFavorite(id) {
         console.log(`Favorited Review = ${id}`)
@@ -129,6 +161,7 @@ export default {
         followUser,
         userId,
         logout,
+        //saveReview,
         userNew
     }
   },
@@ -173,6 +206,15 @@ export default {
 
 .followButton {
     text-align: center;
+}
+
+.logoutButton {
+    text-align: center;
+    cursor: pointer;        // doesnt work, only on outside
+
+    &:hover {
+        transform: scale(1.1, 1.1);
+      }
 }
 
 .userReviewsWrapper {

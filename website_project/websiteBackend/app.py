@@ -41,7 +41,7 @@ def loginPage():
         return jsonify("Invalid Entry")
 
     userInfo = dict(userInfoJSON)
-    username = userInfo.get("data").get("username")
+    userID = userInfo.get("data").get("username")
     password = userInfo.get("data").get("password")
 
     # get item from dynamodb table 'Users'
@@ -49,7 +49,7 @@ def loginPage():
 
     # get user from table and return json if found
     user = userTable.get_item(Key = {
-        "UserID": username
+        "UserID": userID
     })
 
     # returns info/user based on data entered
@@ -62,6 +62,41 @@ def loginPage():
         return jsonify("Failed to find user")
     else:
         return jsonify("Something went horribly wrong")
+
+@app.route("/post", methods = ['GET', 'POST'])
+def post():
+    print("hey")
+    reviewInfoJSON = request.json
+    reviewInfo = dict(reviewInfoJSON)
+    print(reviewInfo)
+    reviewInfo = reviewInfo.get("review")
+    print(reviewInfo)
+    userID = reviewInfo[1]
+    print(userID)
+    reviewInfo = reviewInfo[0]
+    print(reviewInfo)
+
+    #if(userInfoJSON.get("data").get("username") == ''):
+    #    return jsonify("Invalid Entry")
+
+    # get dynamodb table 'Users', put review into user
+    userTable = dynamodb.Table('Users')                     # will eventually probably have to be more efficient, only get user from table
+    user = userTable.get_item(Key = {
+        "UserID": userID
+    })
+    print(user)
+
+    # Might have to delete the user from dynamodb, insert the review, and add it back to dynamo
+
+    #user.get("Item").get("Password")
+    #userTable.update_item(
+        #Key = {
+            #"UserID": userID
+        #},
+        #UpdateExpression = "set reviews"
+    #)
+
+    return NULL
 
 @app.route("/admin")
 def adminPage():

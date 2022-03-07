@@ -11,6 +11,13 @@
                 {{ option.name }}
             </option>
         </select>
+
+        <label for="newGenreType"> <strong>Genre: </strong> </label>
+        <select id = "newGenreType" v-model = "state.selectedGenreType">
+            <option :value = "option.value" v-for = "(option, index) in state.genreTypes" :key = "index">
+                {{ option.name }}
+            </option>
+        </select>
     </div>
     <button >
         Post Review
@@ -28,11 +35,33 @@ export default {
         const state = reactive({
             newReviewContent: '',
             selectedReviewType: 'choose',
+            selectedGenreType: 'choose',            // the name genreType is dumb
             reviewTypes: [
                 { value: 'choose', name: 'Choose' },
                 { value: 'music', name: 'Music' },
                 { value: 'game', name: 'Game' },
                 { value: 'movie', name: 'Movie' }
+            ],
+            // will eventually need to display differently depending on what review type is chosen
+            genreTypes: [
+                { value: 'choose',              name: 'Choose' },
+                { value: 'indie/Alternative',   name: 'Indie/Alternative' },
+                { value: 'rock',                name: 'Rock' },
+                { value: 'hip-Hop',             name: 'Hip-Hop' },
+                { value: 'metal',               name: 'Metal' },
+                { value: 'soul',                name: 'Soul' },
+                { value: 'pop',                 name: 'Pop' },
+                { value: 'classical',           name: 'Classical' },
+                { value: 'alternative-Rock',    name: 'Alternative-Rock' },
+                { value: 'latin',               name: 'Latin' },
+                { value: 'funk',                name: 'Funk' },
+                { value: 'bluegrass',           name: 'Bluegrass' },
+                { value: 'experimental',        name: 'Experimental' },
+                { value: 'grunge',              name: 'Grunge' },
+                { value: 'jazz',                name: 'Jazz' },
+                { value: 'blues',               name: 'Blues' },
+                { value: 'country',             name: 'Country' },
+                { value: 'dubstep',             name: 'Dubstep' }
             ]
         })
 
@@ -40,7 +69,7 @@ export default {
 
         function createNewReview() {
             // converts review data into list to be sent (emitted) to addReview function in userProfile
-            var newReviewList = [state.newReviewContent, state.selectedReviewType]
+            var newReviewList = [state.newReviewContent, state.selectedReviewType, state.selectedGenreType]
 
             if (state.newReviewContent && state.selectedReviewType !== 'choose') {
                 ctx.emit('add-review', newReviewList);
