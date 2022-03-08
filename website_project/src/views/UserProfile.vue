@@ -59,11 +59,11 @@ export default {
 
 
     // ?: get fetch to work off of mount/created. launch from there instead of follow button. --> For when Links are added to users, to redirect to a user page that isn't logged in
-    // 1: Fix the genre not working so we can save the reviews to the db
-    // 2: save reviews to db using POST. Send new review data from function addReview
-    // 3: Figure out how backend updates db, bc we can either send whole user or just the review here
-    // 4: Load these reviews into the home page as well as the browse page. 
+    // 4: Load these reviews into the home page as well as the browse page, in some meaningful order/way
+    // 4.5: Add register function
     // 5: Add a featured review and featured songs/albums/artists to home
+    // 5.5: Might need to have a date created in the review data, as well as account creation date
+    // 5.6: Add stats to user like average rating, past likes, total likes, etc. I think we should remove followers and just have average review rating and number of ratings. That way famous people's opinions wouldnt be more important
     // 7: Add Description / welcome message to home
     // 8: Remove the post function in user profile page without website breaking
     // 9: Add security to passwords
@@ -71,6 +71,9 @@ export default {
     // ?: Add redirects to homepage/browse when necessary (right domain, wrong extension | or review that doesnt exist, etc)
     // ?: Change userNew to user when other problem is fixed
     // ?: Output invalid username / password to user instead of just to console
+    // ?: Be able to edit specific values of your review - could be added as a separate page, linked to by both profile and post
+    // ?: Add click outside functionality for dropdown boxes
+    // ?: Order the reviews in reverse-id order so the newest is at front
     // else: Launch app as website, get user testing
 
 
@@ -103,13 +106,7 @@ export default {
         })
         .then((response) => response.json())
         .then(function (data) {
-          console.log(typeof(data))
-          if (typeof(data) == "string") {
-            console.log("invalid");   
-            state.invalid = true
-          }
-          else
-            console.log(data); 
+          console.log(data)             // flask returns a response object
         })
         .catch(function (error) {
           console.warn('Something went horribly wrong.', error);
@@ -131,23 +128,6 @@ export default {
         await router.push('/');
       }
 
-    
-      /*function getUsers() {
-        fetch('http://localhost:5000/user/1', {
-            method: "GET",
-
-        })
-
-        .then(resp => resp.json())
-        .then(data => {
-
-            console.log(data);
-        })
-        .catch(error => {
-            console.log(error)      
-        })
-    }*/
-
       watch(() => state.followers, (followers, oldFollowerCount) => { 
         if (oldFollowerCount < followers) {
         console.log(`${state.user.username} has gained a follower`)
@@ -161,7 +141,6 @@ export default {
         followUser,
         userId,
         logout,
-        //saveReview,
         userNew
     }
   },

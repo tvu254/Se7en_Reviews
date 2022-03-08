@@ -1,5 +1,5 @@
 <template>
-<div class = "reviewItem" @click="favoriteReview(review.id)">
+<div class = "reviewItem" @click="showOptions(review.id)">
     <div class = "userProfileReview">
         <div class = "userReviewItem">
             {{ username }}
@@ -18,9 +18,25 @@
 </template>
 
 <script>
+import { ref } from "vue";
+
 export default {
     name: "ReviewItem",
-    props: {
+    setup(props, ctx) {
+
+        const optionsToggle = ref(false);
+
+        function showOptions(id) {
+            ctx.emit('favorite', id)
+            optionsToggle.value = !optionsToggle.value;
+        }
+
+        return {
+            showOptions,
+            optionsToggle
+        }
+    },
+    props:  {
         username: {
             type: String,
             required: true
@@ -28,11 +44,6 @@ export default {
         review: {
             type: Object,
             required: true
-        }
-    },
-    methods: {
-        favoriteReview(id) {
-            this.$emit('favorite', id)
         }
     }
 };

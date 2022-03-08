@@ -5,8 +5,32 @@
 </template>
 
 <script>
-    export default {
-        name: "Browse"
+import { onMounted } from "vue";
+
+export default {
+    name: "Browse",
+    setup() {
+        onMounted(() => {
+            getUsers();
+        })
+
+        function getUsers() {
+            fetch('http://localhost:5000/browse', {
+                method: "GET",
+            })
+            .then(resp => resp.json())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(function (error) {
+                console.warn('Something went horribly wrong.', error);
+            });
+        }
+
+        return {
+            getUsers
+        }
+      },
     };
 </script>
 

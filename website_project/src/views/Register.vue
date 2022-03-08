@@ -1,27 +1,30 @@
 <template>
 <form @submit.prevent="handleSubmit">
-  <div class="login">
-    <h1><strong>Login</strong></h1>
+  <div class="register">
+    <h1><strong>Register</strong></h1>
 
     <div class="formText">
+      <label>First Name</label>
+      <input type="text" class="formBox" v-model="state.firstName" placeholder="First Name"/>
+
+      <label>Last Name</label>
+      <input type="password" class="formBox" v-model="state.lastName" placeholder="Last Name"/>
+
+      <label>Email (only for password recovery)</label>
+      <input type="password" class="formBox" v-model="state.email" placeholder="Email"/>
+
       <label>Username</label>
       <input type="text" class="formBox" v-model="state.username" placeholder="Username"/>
 
       <label>Password</label>
       <input type="password" class="formBox" v-model="state.password" placeholder="Password"/>
-    </div>
 
-    <div class="invalid" v-if="state.invalid">
-      Invalid username or password
+      <label>Confirm Password</label>
+      <input type="password" class="formBox" v-model="state.confirmPassword" placeholder="Confirm Password"/>
     </div>
   </div>
 
-  <div class = 'registerLink'>
-    <router-link to="/register">
-      Or click here to register an account
-    </router-link>
-  </div>
-  <button class="loginButton">Login</button>
+  <button class="registerButton">Register</button>
 </form>
 </template>
 
@@ -36,8 +39,12 @@ export default {
 
     const store = useStore();
     const state = reactive({
+      firstName:  '',
+      lastName:  '',
+      email:  '',
       username:  '',
       password:  '',
+      confirmPassword: '',
       invalid: false
     })
     
@@ -48,7 +55,7 @@ export default {
         password: state.password
         };
         
-        await fetch('http://localhost:5000/login', {
+        await fetch('http://localhost:5000/register', {
           method: 'POST',
           body: JSON.stringify({ data }),
           headers: {
@@ -90,18 +97,11 @@ export default {
 
 <style lang="scss" scoped>
 
-.login {
+.register {
     text-align: center;
 
-    .loginButton {
+    .registerButton {
       text-align: center;
-    }
-
-    .registerLink {
-      text-align: center;
-    }
-    .invalid {
-      color: rgb(184, 0, 0)
     }
 }
 

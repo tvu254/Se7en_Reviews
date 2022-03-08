@@ -1,7 +1,8 @@
 from asyncio.windows_events import NULL
-import os, json, boto3, requests        # look up what requests is for
+import os, json, boto3, requests        # look up what requests does exactly
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
+from boto3.dynamodb.conditions import Key, Attr
 
 # Run flask app and cors =  browser compatibility basically
 app = Flask(__name__)  #  name == special name for module
@@ -65,38 +66,48 @@ def loginPage():
 
 @app.route("/post", methods = ['GET', 'POST'])
 def post():
-    print("hey")
     reviewInfoJSON = request.json
     reviewInfo = dict(reviewInfoJSON)
-    print(reviewInfo)
     reviewInfo = reviewInfo.get("review")
-    print(reviewInfo)
     userID = reviewInfo[1]
-    print(userID)
     reviewInfo = reviewInfo[0]
-    print(reviewInfo)
 
-    #if(userInfoJSON.get("data").get("username") == ''):
+    #if(userInfoJSON.get("data").get("username") == ''):            --> Might not need bc other code checks this, modularity always good tho
     #    return jsonify("Invalid Entry")
 
     # get dynamodb table 'Users', put review into user
-    userTable = dynamodb.Table('Users')                     # will eventually probably have to be more efficient, only get user from table
+    userTable = dynamodb.Table('Users')                     # will eventually probably have to be more efficient, only get user from table. Unless it only gets a dynamo reference
     user = userTable.get_item(Key = {
         "UserID": userID
     })
-    print(user)
 
-    # Might have to delete the user from dynamodb, insert the review, and add it back to dynamo
+    newReviewInfo = user.get("Item").get("reviews")
+    newReviewInfo = list(newReviewInfo)
+    newReviewInfo.append(reviewInfo)
+    response = userTable.update_item(
+        Key = {
+            "UserID": userID
+        },
+        UpdateExpression = "set reviews=:r",
+        ExpressionAttributeValues = {
+            ':r': newReviewInfo
+        }
+    )
 
-    #user.get("Item").get("Password")
-    #userTable.update_item(
-        #Key = {
-            #"UserID": userID
-        #},
-        #UpdateExpression = "set reviews"
-    #)
+    return response
 
+@app.route("/register")
+def Register():
+    #FIXME
     return NULL
+
+@app.route("/browse")
+def Browse():
+    userTable = dynamodb.Table('Users')
+    userDataList = userTable.query(
+        KeyConditionExpression=Key('UserID')
+    )
+    return jsonify(userDataList)
 
 @app.route("/admin")
 def adminPage():

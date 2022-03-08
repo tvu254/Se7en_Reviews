@@ -41,57 +41,55 @@ export default {
       const userNew = computed(() => store.state.User.user);
       const userId = computed(() => route.params.userId)
 
-
-    // 1: get fetch to work off of mount/created. launch from there instead of follow button. --> This is for loading a profile when clicked, while this .vue is for clicking on own profile
-    // 3: save reviews to db using POST. Send new review data from function addReview
-    // 4: Figure out how backend updates db, bc we can either send whole user or just the review here
-
       const state = reactive({
         followers: 0,
       })
 
       function addReview(newReviewList) {
         newReviewList[1] = newReviewList[1].charAt(0).toUpperCase() + newReviewList[1].slice(1);
+        newReviewList[2] = newReviewList[2].charAt(0).toUpperCase() + newReviewList[2].slice(1);
 
         userNew.value.Item.reviews.unshift( {
             id: userNew.value.Item.reviews.length + 1,
             type: newReviewList[1],
-            genre: 'WIP',
+            genre: newReviewList[2],
             content: newReviewList[0]
         });
+        saveReview([userNew.value.Item.reviews[0], userNew.value.Item.UserID])
     }
+
+      const saveReview = async (review) => {
+        
+        await fetch('http://localhost:5000/post', {
+          method: 'POST',
+          body: JSON.stringify({ review }),
+          headers: {
+            'Content-type': 'application/json',
+          }
+        })
+        .then((response) => response.json())
+        .then(function (data) {
+          console.log(typeof(data))             // flask returns a response object
+        })
+        .catch(function (error) {
+          console.warn('Something went horribly wrong.', error);
+        });
+      };
 
       function toggleFavorite(id) {
         console.log(`Favorited Review = ${id}`)
-    }
+      }
 
       function followUser() {
         state.followers++
         //getUsers() // should be on created
         console.log("data");
-    }
+      }
 
       const logout = async () => {
         await store.dispatch('User/setUser', null);
         await router.push('/');
       }
-
-    
-      /*function getUsers() {
-        fetch('http://localhost:5000/user/1', {
-            method: "GET",
-
-        })
-
-        .then(resp => resp.json())
-        .then(data => {
-
-            console.log(data);
-        })
-        .catch(error => {
-            console.log(error)      
-        })
-    }*/
 
       watch(() => state.followers, (followers, oldFollowerCount) => { 
         if (oldFollowerCount < followers) {
@@ -106,6 +104,7 @@ export default {
         followUser,
         userId,
         logout,
+        saveReview,
         userNew
     }
   },

@@ -6,6 +6,7 @@ import Admin from "../views/Admin";
 import Browse from "../views/Browse";
 import Login from "../views/Login";
 import Post from "../views/Post";
+import Register from "../views/Register";
 
 const routes = [
   {
@@ -22,6 +23,11 @@ const routes = [
     path: '/login',    
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/register',    
+    name: 'Register',
+    component: Register
   },
   {
     path: '/browse',
