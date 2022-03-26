@@ -3,7 +3,7 @@
     <nav>
       <router-link to="/">
         <div class="navigationLogo">
-          <strong>uReview</strong>
+          <img src="./assets/logo.png">
         </div>
       </router-link>
       <router-link to="/browse">
@@ -64,19 +64,21 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #0d1424;
   min-height: 100vh;
-  background-color: #ececec;
+  //background-color: #ececec;
 
   nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px 5%;
-    background-color: #0d1424;
+    background-color: rgba(0, 74, 124, .9);
     color: #d6d6d6;
 
     .navigationLogo {
-      font-size: 34px;
-      
+      display: flex;
+      width: auto;
+      height: 40px;
+
       &:hover {
         filter: brightness(150%);
         transform: scale(1.01, 1.01);
@@ -118,7 +120,7 @@ export default {
       }
     }
     
-    .login {
+    .loginRegister {
       font-weight: normal;
       font-size: 18px;
       align-items: center;

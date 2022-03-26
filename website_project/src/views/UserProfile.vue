@@ -18,13 +18,18 @@
         <div class = "reviewName">
             {{userNew.Item.UserID}}'s Reviews:
         </div> 
-        <ReviewItem     
-            v-for="review in userNew.Item.reviews" 
-            :key = "review.id" 
-            :username = "userNew.Item.UserID" 
-            :review = "review" 
-            @favorite = "toggleFavorite"
-        />
+
+        <div v-if="userNew.Item.reviews">
+          <ReviewItem     
+              v-for="review in userNew.Item.reviews" 
+              :key = "review.id" 
+              :username = "userNew.Item.UserID" 
+              :review = "review" 
+              @favorite = "toggleFavorite"
+          />
+        </div>
+        <div v-else> Nothing yet :)</div>
+
     </div>
         <div class = "followButton">
             <button v-on:click="followUser">
@@ -60,17 +65,16 @@ export default {
 
     // ?: get fetch to work off of mount/created. launch from there instead of follow button. --> For when Links are added to users, to redirect to a user page that isn't logged in
     // 4: Load these reviews into the home page as well as the browse page, in some meaningful order/way
-    // 4.5: Add register function
+    // 4.20: add links to the users names that direct to their page. clicking on the review expands it. For when we have more info there
     // 5: Add a featured review and featured songs/albums/artists to home
     // 5.5: Might need to have a date created in the review data, as well as account creation date
     // 5.6: Add stats to user like average rating, past likes, total likes, etc. I think we should remove followers and just have average review rating and number of ratings. That way famous people's opinions wouldnt be more important
+    // 6: add artist, album, songname to review
     // 7: Add Description / welcome message to home
     // 8: Remove the post function in user profile page without website breaking
     // 9: Add security to passwords
-    // ?: Oh also figure out how props work
     // ?: Add redirects to homepage/browse when necessary (right domain, wrong extension | or review that doesnt exist, etc)
     // ?: Change userNew to user when other problem is fixed
-    // ?: Output invalid username / password to user instead of just to console
     // ?: Be able to edit specific values of your review - could be added as a separate page, linked to by both profile and post
     // ?: Add click outside functionality for dropdown boxes
     // ?: Order the reviews in reverse-id order so the newest is at front

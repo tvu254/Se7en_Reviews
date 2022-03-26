@@ -61,7 +61,7 @@ router.beforeEach(async (to, from, next) => {
   console.log(user)
   if (!user) {
     // fetch user from db once db connected, this just sets state as first user - will eventually need to be connected to register/login
-    await store.dispatch('User/setUser', user)   // dispatches action 'setUser' with data users[0] from users.js file
+    await store.dispatch('User/setUser', user)   // dispatches action 'setUser'
   }
 
   const isAdmin = true; // should actually reference user

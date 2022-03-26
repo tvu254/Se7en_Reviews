@@ -26,6 +26,8 @@ export default {
 
         const optionsToggle = ref(false);
 
+
+
         function showOptions(id) {
             ctx.emit('favorite', id)
             optionsToggle.value = !optionsToggle.value;

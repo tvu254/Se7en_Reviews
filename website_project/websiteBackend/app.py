@@ -13,8 +13,6 @@ dynamodb = boto3.resource("dynamodb")
 
 app.url_map.strict_slashes = False
 SECRET_KEY = os.environ.get('SECRET_KEY')
-#app.secret_key = os.urandom(12).hex()
-#app.config['SECRET_KEY'] = "Your_secret_string"
 
 
 # routes
@@ -39,7 +37,7 @@ def loginPage():
     # get username from data sent
     userInfoJSON = request.json
     if(userInfoJSON.get("data").get("username") == ''):
-        return jsonify("Invalid Entry")
+        return jsonify("Invalid entry")
 
     userInfo = dict(userInfoJSON)
     userID = userInfo.get("data").get("username")
@@ -63,6 +61,49 @@ def loginPage():
         return jsonify("Failed to find user")
     else:
         return jsonify("Something went horribly wrong")
+
+@app.route("/register", methods = ['GET', 'POST'])
+def Register():
+    # get username from data sent
+    userInfoJSON = request.json
+    if(userInfoJSON.get("data").get("username") == ''):
+        return jsonify("Invalid entry")
+
+    userInfo = dict(userInfoJSON)
+
+    if(userInfo.get("data").get("password") != userInfo.get("data").get("confirmPassword")):
+        return jsonify("Invalid password")
+
+
+    userTable = dynamodb.Table('Users')
+    userTable.put_item(
+        Item = {
+            "UserID": userInfo.get("data").get("username"),
+            "Password": userInfo.get("data").get("password"),
+            "lastName": userInfo.get("data").get("lastName"),
+            "isAdmin": False,
+            "reviews": [],
+            "email": userInfo.get("data").get("email"),
+            "firstName": userInfo.get("data").get("firstName"),
+            "isVerified": False
+        }
+    )
+
+
+
+    # put some check here, but for now it works
+
+    id = userInfo.get("data").get("username")
+    user = userTable.get_item(Key = {
+        "UserID": id
+    })
+
+    return jsonify(user)
+    #if jsonify(userCheck) == jsonify(userInfo):
+    #    return jsonify(userCheck)
+    #else:
+    #    return "Failure"
+
 
 @app.route("/post", methods = ['GET', 'POST'])
 def post():
@@ -96,18 +137,34 @@ def post():
 
     return response
 
-@app.route("/register")
-def Register():
-    #FIXME
-    return NULL
+
 
 @app.route("/browse")
 def Browse():
     userTable = dynamodb.Table('Users')
-    userDataList = userTable.query(
-        KeyConditionExpression=Key('UserID')
-    )
-    return jsonify(userDataList)
+    #userDataList = userTable.query(
+        #KeyConditionExpression=Key('UserID')
+    #)
+    #userTable = dict(userTable)
+    response = userTable.scan()
+
+    # get user from table and return json
+    #userList = []
+    #userId = 1
+    #for i in range(0,5):
+        #user = userTable.get_item(Key = {
+            #"UserID": str(userId)
+        #})
+        #userList.append(user)
+        #userId += 1
+        #print("User number")
+        #print(userId)
+        #print(user)
+    #print('right here!!')
+    #print(userList)
+    #return jsonify(userList)
+
+    return jsonify(response)
 
 @app.route("/admin")
 def adminPage():

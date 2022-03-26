@@ -6,7 +6,7 @@
     <div class="formText">
       <label>Username</label>
       <input type="text" class="formBox" v-model="state.username" placeholder="Username"/>
-
+      <br>
       <label>Password</label>
       <input type="password" class="formBox" v-model="state.password" placeholder="Password"/>
     </div>
@@ -17,11 +17,12 @@
   </div>
 
   <div class = 'registerLink'>
+   <button class="loginButton">Login</button>
+   <br>
     <router-link to="/register">
       Or click here to register an account
     </router-link>
-  </div>
-  <button class="loginButton">Login</button>
+   </div> 
 </form>
 </template>
 
@@ -57,10 +58,10 @@ export default {
         })
         .then((response) => response.json())
         .then(function (data) {
-          console.log(typeof(data))
-          if (typeof(data) == "string") {
+          console.log(data)
+          if (data == "Invalid entry") {
             console.log("invalid username or password");
-            state.invalid = true    // somehow doesnt actually update the state??? should work otherwise though I think
+            state.invalid = true 
           }
           else
             console.log(data);  
