@@ -13,11 +13,11 @@
         <br>
 
       <label>Last Name</label>
-      <input type="password" class="formBox" v-model="state.lastName" placeholder="Last Name"/>
+      <input type="text" class="formBox" v-model="state.lastName" placeholder="Last Name"/>
       <br>
 
       <label>Email (only for password recovery)</label>
-      <input type="password" class="formBox" v-model="state.email" placeholder="Email"/>
+      <input type="text" class="formBox" v-model="state.email" placeholder="Email"/>
       <br>
 
       <label>Password</label>

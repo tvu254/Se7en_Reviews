@@ -5,15 +5,19 @@
     </div>
     <div class = "userReviewsWrapper">
         <div class = "reviewName">
-            @{{userNew.Item.UserID}}'s Reviews:
+            {{ userNew.Item.UserID }}'s Reviews:
         </div> 
-        <ReviewItem 
-            v-for="review in userNew.Item.reviews" 
-            :key = "review.id" 
-            :username = "userNew.Item.UserID" 
-            :review = "review" 
-            @favorite = "toggleFavorite"
-        />
+
+        <div v-if="userNew.Item.reviews == []">
+          <ReviewItem     
+              v-for="review in userNew.Item.reviews" 
+              :key = "review.id" 
+              :username = "userNew.Item.UserID" 
+              :review = "review" 
+              @favorite = "toggleFavorite"
+          />
+        </div>
+        <div v-else> Nothing yet :)</div>
     </div>
         <div class = "followButton">
             <button v-on:click="followUser">
