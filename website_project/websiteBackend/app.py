@@ -43,6 +43,7 @@ def loginPage():
     userID = userInfo.get("data").get("username")
     password = userInfo.get("data").get("password")
 
+
     # get item from dynamodb table 'Users'
     userTable = dynamodb.Table('Users')
 
@@ -51,9 +52,14 @@ def loginPage():
         "UserID": userID
     })
 
+    # still gets user for userProfile if user not logged in --> (scuffed way to do this. If someone has access to the code, they can log in to any user lmao)
+    userPassword = user.get("Item").get("Password")
+    if(password == 'sgdfsd5897jds5hd3h3dfs56h4dhj56d4h756d545hftdh'):
+        userPassword = 'sgdfsd5897jds5hd3h3dfs56h4dhj56d4h756d545hftdh'
+
     # returns info/user based on data entered
     if (len(user) == 2):                                                 # scuffed --> but works bc - if user, then theres two key entries in user dict
-        if (user.get("Item").get("Password") == password):
+        if (userPassword == password):
             return jsonify(user)
         else:
             return jsonify("Invalid Password")
@@ -99,10 +105,6 @@ def Register():
     })
 
     return jsonify(user)
-    #if jsonify(userCheck) == jsonify(userInfo):
-    #    return jsonify(userCheck)
-    #else:
-    #    return "Failure"
 
 
 @app.route("/post", methods = ['GET', 'POST'])
@@ -146,6 +148,7 @@ def Browse():
         #KeyConditionExpression=Key('UserID')
     #)
     #userTable = dict(userTable)
+
     response = userTable.scan()
 
     # get user from table and return json

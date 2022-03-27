@@ -11,13 +11,22 @@
       <br>
       <br>
 
+      <div v-show="state.loaded">
+        <router-link v-for="user in userList" :to="{ name: 'UserProfile', params: {userId: user.UserID} }" :key="user.UserID">
+          {{ user.username }}
+        </router-link>
+      </div>
+
       <router-link v-for="user in users" :to="{ name: 'UserProfile', params: {userId: user.id} }" :key="user.id">
         {{ user.username }}
       </router-link>
   </div>
-          <div v-show="state.loaded">
+      <div v-show="state.loaded">
         <div v-for="user in userList" :key = "user.reviews">
-            <strong>{{ user.UserID }}'s </strong> reviews:
+            <router-link :to="`/user/${user.UserID}`">
+              <strong>{{ user.UserID }}'s </strong>
+            </router-link> 
+                reviews:
                 <ReviewItem     
                     v-for="review in user.reviews" 
                     :key = "review.id" 
@@ -34,6 +43,13 @@
 </template>
 
 <script>
+/*
+      <div v-show="state.loaded">
+        <router-link v-for="user in userList" :to="{ name: 'UserProfile', params: {userId: user.userID} }" :key="user.UserID">
+          {{ user.username }}
+        </router-link>
+      </div>
+      */
 import { onMounted, reactive } from "vue";
 import ReviewItem from "../components/ReviewItem.vue"
 

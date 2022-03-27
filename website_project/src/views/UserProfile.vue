@@ -19,8 +19,7 @@
             {{userNew.Item.UserID}}'s Reviews:
         </div> 
 
-        <div v-if="userNew.Item.reviews == []">
-          {{ userNew.Item.reviews }} yo
+        <div v-if="userNew.Item.reviews.length != 0">
           <ReviewItem     
               v-for="review in userNew.Item.reviews" 
               :key = "review.id" 
@@ -60,18 +59,57 @@ export default {
       const store = useStore();
       const route = useRoute();
       const router = useRouter();
-      const userNew = computed(() => store.state.User.user);
       const userId = computed(() => route.params.userId)
+      const userNew = computed(() => store.state.User.user);
+      if(userNew.value == null) {
+        // fetch user, set to userNew
+        const data = {
+          username: userId.value,
+          password: 'sgdfsd5897jds5hd3h3dfs56h4dhj56d4h756d545hftdh'
+        };
 
+        fetch('http://localhost:5000/login', {
+          method: 'POST',
+          body: JSON.stringify({ data }),
+          headers: {
+            'Content-type': 'application/json',
+          }
+        })
+        .then((response) => response.json())
+        .then(function (data) {
+          console.log(data)
+          if (data == "Invalid Password") {
+            console.log("invalid username or password");
+            state.invalid = true   
+          }
+          else if (data == "Failed to find user") {
+            console.log("user not found")
+          }
+          else if (data == "Something went horribly wrong") {
+            console.log("Something went horribly wrong")
+          }
+          else
+            console.log(data);  
+            // FIXME: STILL sets the user // figure out how the data is called and make it work throughout
+            setUser(data);
+        })
+        .catch(function (error) {
+          console.warn('Something went horribly wrong.', error);
+        });
+      }
 
-    // ?: get fetch to work off of mount/created. launch from there instead of follow button. --> For when Links are added to users, to redirect to a user page that isn't logged in
+      const setUser = async (user) => {
+        await store.dispatch('User/setUser', user);
+        console.log(user.Item.username)
+        await router.push('/');
+      }
+
+    // ?: when Links are added to users, to redirect to a user page that isn't logged in
     // 4: Load these reviews into the home page as well as the browse page, in some meaningful order/way
     // 4.20: add links to the users names that direct to their page. clicking on the review expands it. For when we have more info there
-    // 5: Add a featured review and featured songs/albums/artists to home
     // 5.5: Might need to have a date created in the review data, as well as account creation date
     // 5.6: Add stats to user like average rating, past likes, total likes, etc. I think we should remove followers and just have average review rating and number of ratings. That way famous people's opinions wouldnt be more important
     // 6: add artist, album, songname to review
-    // 7: Add Description / welcome message to home
     // 8: Remove the post function in user profile page without website breaking
     // 9: Add security to passwords
     // ?: Add redirects to homepage/browse when necessary (right domain, wrong extension | or review that doesnt exist, etc)
@@ -81,15 +119,28 @@ export default {
     // ?: Order the reviews in reverse-id order so the newest is at front
     // else: Launch app as website, get user testing
 
+    // BY PRESENTATION DAY
+    // links of reviewers take you to profile
+    // post panel removed from user page
+    // add date created to reviews and profiles
+    // add adding song, artist, album to review
+    // delete/edit review
+    //    ^--> this requires a drop-down box when clicking review. Asks for edit or delete. Edit will have to be it's own component. Data sent to flask will replace every value in current review, then entered. Delete asks if you are sure  
+    // register name updates
 
       const state = reactive({
         followers: 0,
+        reviews: userNew.value.Item.reviews
+        
+
       })
 
       function addReview(newReviewList) {
+        // capitalizes the first letter for equivalence
         newReviewList[1] = newReviewList[1].charAt(0).toUpperCase() + newReviewList[1].slice(1);
         newReviewList[2] = newReviewList[2].charAt(0).toUpperCase() + newReviewList[2].slice(1);
 
+        // add review to local user, then call save
         userNew.value.Item.reviews.unshift( {
             id: userNew.value.Item.reviews.length + 1,
             type: newReviewList[1],

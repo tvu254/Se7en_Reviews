@@ -1,7 +1,7 @@
 <template>
     <div class="browse">
         <h1>Browse</h1>
-
+        
     <div v-show="state.loaded">
         <div v-for="user in userList" :key = "user.reviews">
             <strong>{{ user.UserID }}'s </strong> reviews:

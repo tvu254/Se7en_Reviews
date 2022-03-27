@@ -5,7 +5,7 @@
     <div class="login">
       <header>
         <h2>Login</h2>
-        <p>login here using your username and password</p>
+        <p>Login here using your username and password</p>
       </header>
       <form @submit.prevent="handleSubmit">
         <input type="text" class="text" v-model="state.username" name="username">
@@ -60,8 +60,8 @@ export default {
         })
         .then((response) => response.json())
         .then(function (data) {
-          console.log(typeof(data))
-          if (typeof(data) == "string") {
+          console.log(data)
+          if (data == "Invalid Password") {
             console.log("invalid username or password");
             state.invalid = true    // somehow doesnt actually update the state??? should work otherwise though I think
           }
