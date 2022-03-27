@@ -8,7 +8,7 @@
             {{ userNew.Item.UserID }}'s Reviews:
         </div> 
 
-        <div v-if="userNew.Item.reviews == []">
+        <div v-if="!userNew.Item.reviews == []">
           <ReviewItem     
               v-for="review in userNew.Item.reviews" 
               :key = "review.id" 
@@ -30,7 +30,7 @@
 <script>
 import { reactive, watch, computed } from 'vue';
 import { useStore } from 'vuex';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import ReviewItem from "../components/ReviewItem.vue"
 import CreateReviewPanel from "../components/CreateReviewPanel.vue";
 
@@ -41,7 +41,6 @@ export default {
 
       const store = useStore();
       const route = useRoute();
-      const router = useRouter();
       const userNew = computed(() => store.state.User.user);
       const userId = computed(() => route.params.userId)
 
@@ -90,11 +89,6 @@ export default {
         console.log("data");
       }
 
-      const logout = async () => {
-        await store.dispatch('User/setUser', null);
-        await router.push('/');
-      }
-
       watch(() => state.followers, (followers, oldFollowerCount) => { 
         if (oldFollowerCount < followers) {
         console.log(`${state.user.username} has gained a follower`)
@@ -107,7 +101,6 @@ export default {
         toggleFavorite,
         followUser,
         userId,
-        logout,
         saveReview,
         userNew
     }

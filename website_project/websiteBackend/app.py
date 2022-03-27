@@ -53,6 +53,7 @@ def loginPage():
     })
 
     # still gets user for userProfile if user not logged in --> (scuffed way to do this. If someone has access to the code, they can log in to any user lmao)
+    # could generate one every session here and send it
     userPassword = user.get("Item").get("Password")
     if(password == 'sgdfsd5897jds5hd3h3dfs56h4dhj56d4h756d545hftdh'):
         userPassword = 'sgdfsd5897jds5hd3h3dfs56h4dhj56d4h756d545hftdh'

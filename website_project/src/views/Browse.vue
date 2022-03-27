@@ -1,10 +1,12 @@
 <template>
     <div class="browse">
         <h1>Browse</h1>
-        
+
     <div v-show="state.loaded">
         <div v-for="user in userList" :key = "user.reviews">
-            <strong>{{ user.UserID }}'s </strong> reviews:
+            <router-link :to="`/user/${user.UserID}`">
+              <strong>{{ user.UserID }}'s </strong>
+            </router-link> 
                 <ReviewItem     
                     v-for="review in user.reviews" 
                     :key = "review.id" 

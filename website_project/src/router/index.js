@@ -7,6 +7,7 @@ import Browse from "../views/Browse";
 import Login from "../views/Login";
 import Post from "../views/Post";
 import Register from "../views/Register";
+import Profile from "../views/Profile";
 
 const routes = [
   {
@@ -18,6 +19,11 @@ const routes = [
     path: '/user/:userId',    // uses username as variable in URL
     name: 'UserProfile',
     component: UserProfile
+  },
+  {
+    path: '/user/:userId',
+    name: 'Profile',
+    component: Profile
   },
   {
     path: '/login',    
