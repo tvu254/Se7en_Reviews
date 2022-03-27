@@ -92,11 +92,10 @@ def Register():
             "reviews": [],
             "email": userInfo.get("data").get("email"),
             "firstName": userInfo.get("data").get("firstName"),
+            "dateCreated": userInfo.get("data").get("dateCreated"),
             "isVerified": False
         }
     )
-
-
 
     # put some check here, but for now it works
 
@@ -116,9 +115,6 @@ def post():
     userID = reviewInfo[1]
     reviewInfo = reviewInfo[0]
 
-    #if(userInfoJSON.get("data").get("username") == ''):            --> Might not need bc other code checks this, modularity always good tho
-    #    return jsonify("Invalid Entry")
-
     # get dynamodb table 'Users', put review into user
     userTable = dynamodb.Table('Users')                     # will eventually probably have to be more efficient, only get user from table. Unless it only gets a dynamo reference
     user = userTable.get_item(Key = {
@@ -128,6 +124,7 @@ def post():
     newReviewInfo = user.get("Item").get("reviews")
     newReviewInfo = list(newReviewInfo)
     newReviewInfo.append(reviewInfo)
+
     response = userTable.update_item(
         Key = {
             "UserID": userID

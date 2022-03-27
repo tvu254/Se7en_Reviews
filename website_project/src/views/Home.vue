@@ -23,6 +23,7 @@
   </div>
       <div v-show="state.loaded">
         <div v-for="user in userList" :key = "user.reviews">
+          <div v-if="user.reviews.length != 0">
             <router-link :to="`/user/${user.UserID}`">
               <strong>{{ user.UserID }}'s </strong>
             </router-link> 
@@ -36,6 +37,7 @@
                 />
                 <br>
                 <br>
+            </div>
         </div>
     </div>
    </div>

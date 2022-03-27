@@ -8,7 +8,7 @@
       </router-link>
       <router-link to="/browse">
         <div class="browse">
-          <strong>Browse Reviews</strong>
+          Browse Reviews
         </div>
       </router-link>
 

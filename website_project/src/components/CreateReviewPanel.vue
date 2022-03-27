@@ -1,23 +1,38 @@
 <template>
 <form class = "createReviewPanel" @submit.prevent = "createNewReview" :class="{ '--exceeded': newReviewCharacterCt > 2000 }">  <!-- stop submit button when > 2000 -->
-    <label for = "newReview"> <strong>New Review</strong> - ({{ newReviewCharacterCt }}/2000)  </label>
+
+    <label for = "newReview"> <strong>New Review:</strong></label>
     <textarea id="newReview" rows = "4" v-model = "state.newReviewContent"/>
 
   <div class="createReviewPanelSubmit">
     <div class = "createReviewType">
-        <label for="newReviewType"> <strong>Type: </strong> </label>
-        <select id = "newReviewType" v-model = "state.selectedReviewType">
-            <option :value = "option.value" v-for = "(option, index) in state.reviewTypes" :key = "index">
-                {{ option.name }}
-            </option>
-        </select>
 
-        <label for="newGenreType"> <strong>Genre: </strong> </label>
-        <select id = "newGenreType" v-model = "state.selectedGenreType">
-            <option :value = "option.value" v-for = "(option, index) in state.genreTypes" :key = "index">
-                {{ option.name }}
-            </option>
-        </select>
+<!--        <label for="newReviewType"> <strong>Type: </strong> </label>
+            <select id = "newReviewType" v-model = "state.selectedReviewType">
+                <option :value = "option.value" v-for = "(option, index) in state.reviewTypes" :key = "index">
+                    {{ option.name }}
+                </option>
+            </select>
+            <br>
+-->
+        <label for="newGenre"> <strong>Genre: </strong> </label>
+            <br>
+            <select id = "newGenre" v-model = "state.selectedGenre">
+                <option :value = "option.value" v-for = "(option, index) in state.genres" :key = "index">
+                    {{ option.name }}
+                </option>
+            </select>
+            <br>
+
+    <label for = "newReview"> <strong>Artist</strong></label>
+    <textarea id="newReview" rows = "1" v-model = "state.newArtistContent"/>
+
+    <label for = "newReview"> <strong>Album</strong></label>
+    <textarea id="newReview" rows = "1" v-model = "state.newAlbumContent"/>
+
+    <label for = "newReview"> <strong>Song Name</strong>  </label>
+    <textarea id="newReview" rows = "1" v-model = "state.newSongNameContent"/>
+
     </div>
     <button >
         Post Review
@@ -34,16 +49,19 @@ export default {
     setup(props, ctx) {
         const state = reactive({
             newReviewContent: '',
-            selectedReviewType: 'choose',
-            selectedGenreType: 'choose',            // the name genreType is dumb
-            reviewTypes: [
-                { value: 'choose', name: 'Choose' },
-                { value: 'music', name: 'Music' },
-                { value: 'game', name: 'Game' },
-                { value: 'movie', name: 'Movie' }
-            ],
+            newArtistContent: '',
+            newAlbumContent: '',
+            newSongNameContent: '',
+//            selectedReviewType: 'choose',
+            selectedGenre: 'choose',
+//            reviewTypes: [
+//                { value: 'choose', name: 'Choose' },
+//                { value: 'music', name: 'Music' },
+                //{ value: 'game', name: 'Game' },
+                //{ value: 'movie', name: 'Movie' }
+//            ],
             // will eventually need to display differently depending on what review type is chosen
-            genreTypes: [
+            genres: [
                 { value: 'choose',              name: 'Choose' },
                 { value: 'indie/Alternative',   name: 'Indie/Alternative' },
                 { value: 'rock',                name: 'Rock' },
@@ -69,9 +87,9 @@ export default {
 
         function createNewReview() {
             // converts review data into list to be sent (emitted) to addReview function in userProfile
-            var newReviewList = [state.newReviewContent, state.selectedReviewType, state.selectedGenreType]
+            var newReviewList = [state.newReviewContent, state.selectedGenre, state.newArtistContent, state.newAlbumContent, state.newSongNameContent, new Date()]
 
-            if (state.newReviewContent && state.selectedReviewType !== 'choose') {
+            if (state.newReviewContent !== 'choose') {
                 ctx.emit('add-review', newReviewList);
                 state.newReviewContent = '';             // eventually needs to not reset when characters > character limit
             }

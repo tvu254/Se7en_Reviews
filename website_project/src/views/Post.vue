@@ -51,18 +51,24 @@ export default {
       function addReview(newReviewList) {
         newReviewList[1] = newReviewList[1].charAt(0).toUpperCase() + newReviewList[1].slice(1);
         newReviewList[2] = newReviewList[2].charAt(0).toUpperCase() + newReviewList[2].slice(1);
+        newReviewList[3] = newReviewList[3].charAt(0).toUpperCase() + newReviewList[3].slice(1);
+        newReviewList[4] = newReviewList[4].charAt(0).toUpperCase() + newReviewList[4].slice(1);
 
         userNew.value.Item.reviews.unshift( {
             id: userNew.value.Item.reviews.length + 1,
-            type: newReviewList[1],
-            genre: newReviewList[2],
-            content: newReviewList[0]
+            content: newReviewList[0],
+            genre: newReviewList[1],
+            artist: newReviewList[2],
+            album: newReviewList[3],
+            songname: newReviewList[4],
+            dateCreated: newReviewList[5],
+
         });
         saveReview([userNew.value.Item.reviews[0], userNew.value.Item.UserID])
     }
 
       const saveReview = async (review) => {
-        
+        console.log(review)
         await fetch('http://localhost:5000/post', {
           method: 'POST',
           body: JSON.stringify({ review }),

@@ -5,13 +5,22 @@
             {{ username }}
         </div>
         <div class = "reviewContext"> 
-            Type - {{ review.type }}
-            <div>
-                Genre - {{ review.genre }} 
+            Genre - {{ review.genre }} 
+
+            <div v-if="review.artist != ''">
+                Artist - {{ review.artist }} 
             </div>
+            <div v-if="review.album != ''">
+                Album - {{ review.album }} 
+            </div>
+            <div v-if="review.songname != ''">
+                Song name - {{ review.songname }} 
+            </div>
+            <br>
+
         </div>
         <div class = "reviewItemContent">
-            {{ review.content }}
+             {{ review.content }}
         </div>
     </div>
 </div>

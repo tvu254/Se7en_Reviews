@@ -64,27 +64,19 @@ export default {
       const user = computed(() => store.state.User.user);
 
     // 4.20:clicking on the review expands it. For when we have more info there
-    // 5.5: Might need to have a date created in the review data, as well as account creation date
     // ?: prevent submitting when over character limit
     // 5.6: Add stats to user like average rating, past likes, total likes, etc. I think we should remove followers and just have average review rating and number of ratings. That way famous people's opinions wouldnt be more important
-    // 6: add artist, album, songname to review
     // 9: Add security to passwords
     // ?: Add redirects to homepage/browse when necessary (right domain, wrong extension | or review that doesnt exist, etc)
-    // ?: Change userNew to user when other problem is fixed
     // ?: Be able to edit specific values of your review - could be added as a separate page, linked to by both profile and post
     // ?: Add click outside functionality for dropdown boxes
     // ?: Order the reviews in reverse-id order so the newest is at front
-    // else: Launch app as website, get user testing
+    // else: Deploy app as website, get user testing
 
     // BY PRESENTATION DAY
-  
-    // add date created to reviews and profiles
-    // add adding song, artist, album to review
     // delete/edit review
     //    ^--> this requires a drop-down box when clicking review. Asks for edit or delete. Edit will have to be it's own component. Data sent to flask will replace every value in current review, then entered. Delete asks if you are sure  
-    // register name updates
     // fix the "nothing yet :)" from showing bc it takes a sec to load
-    // fix users with no reviews showing up on browse / home
 
       const state = reactive({
         followers: 0,
@@ -102,7 +94,6 @@ export default {
 
       function followUser() {
         state.followers++
-        //getUsers() // should be on created
         console.log("data");
     }
 
