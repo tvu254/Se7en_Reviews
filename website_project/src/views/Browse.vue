@@ -1,12 +1,12 @@
 <template>
-    <div class="browse">
-        <h1>Browse</h1>
-
+  <div class="browse">
     <div v-show="state.loaded">
         <div v-for="user in userList" :key = "user.reviews">
+            <div v-if="user.reviews.length != 0">
             <router-link :to="`/user/${user.UserID}`">
               <strong>{{ user.UserID }}'s </strong>
             </router-link> 
+                reviews:
                 <ReviewItem     
                     v-for="review in user.reviews" 
                     :key = "review.id" 
@@ -16,11 +16,10 @@
                 />
                 <br>
                 <br>
+            </div>
         </div>
     </div>
-
-
-    </div>
+  </div>
 </template>
 
 <script>
@@ -46,7 +45,8 @@ export default {
             })
             .then(resp => resp.json())
             .then(data => {
-                for(let i = 0; i < 5; i++) {
+                // will eventually need to gradually load reviews so it doesnt overwhelm, this loads the whole table
+                for(let i = 0; i < (data.Items.length); i++) {
                     userList.unshift(data.Items[i])
                 }
                 state.loaded = true

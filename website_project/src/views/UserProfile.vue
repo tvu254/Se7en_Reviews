@@ -10,14 +10,21 @@
             <div class = "verifiedBadge" v-if="user.Item.isVerified">
                 Verified
             </div>
-            <div class = "userProfileFollowerCt">
+            <div class = "userProfileData">
+                <br>
                 <strong> Followers: </strong> {{ state.followers }}
+                <br>
+                <strong> Likes: </strong> 0
+                <br>
+                <strong> Average Rating: </strong> N/A
+                <br>
+                <strong> ReviewCount: </strong> {{ user.Item.reviews.length }}
             </div>
         </div>
     </div>
     <div class = "userReviewsWrapper">
         <div class = "reviewName">
-            {{user.Item.UserID}}'s Reviews:
+            {{ user.Item.UserID }}'s Reviews:
         </div> 
 
         <div v-if="user.Item.reviews.length != 0">
@@ -32,11 +39,13 @@
         <div v-else> Nothing yet :)</div>
 
     </div>
+    <!--
         <div class = "followButton">
             <button v-on:click="followUser">
                 Follow
             </button>
         </div>
+    -->
         <div class = "logoutButton">
             <button v-on:click="logout">
                 Logout
@@ -67,16 +76,20 @@ export default {
     // ?: prevent submitting when over character limit
     // 5.6: Add stats to user like average rating, past likes, total likes, etc. I think we should remove followers and just have average review rating and number of ratings. That way famous people's opinions wouldnt be more important
     // 9: Add security to passwords
+    // ?: get invalid state to work for login/register - currently works every time except the first time lol
     // ?: Add redirects to homepage/browse when necessary (right domain, wrong extension | or review that doesnt exist, etc)
     // ?: Be able to edit specific values of your review - could be added as a separate page, linked to by both profile and post
     // ?: Add click outside functionality for dropdown boxes
     // ?: Order the reviews in reverse-id order so the newest is at front
+    // ?: Gradually load reviews on browse instead of all at once
     // else: Deploy app as website, get user testing
 
+
     // BY PRESENTATION DAY
+    // FIX LOADING USERS WHEN LOGGED IN
     // delete/edit review
     //    ^--> this requires a drop-down box when clicking review. Asks for edit or delete. Edit will have to be it's own component. Data sent to flask will replace every value in current review, then entered. Delete asks if you are sure  
-    // fix the "nothing yet :)" from showing bc it takes a sec to load
+    // fix the "nothing yet :)" from showing bc it takes a sec to load --> did not say nothing yet when testing just now
 
       const state = reactive({
         followers: 0,
@@ -92,11 +105,11 @@ export default {
         console.log(`Favorited Review = ${id}`)
     }
 
-      function followUser() {
+/*      function followUser() {
         state.followers++
         console.log("data");
     }
-
+*/
       const logout = async () => {
         await store.dispatch('User/setUser', null);
         await router.push('/');
@@ -111,7 +124,7 @@ export default {
     return {
         state,
         toggleFavorite,
-        followUser,
+//        followUser,
         userId,
         logout,
         user

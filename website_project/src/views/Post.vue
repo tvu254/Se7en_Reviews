@@ -8,7 +8,7 @@
             {{ userNew.Item.UserID }}'s Reviews:
         </div> 
 
-        <div v-if="!userNew.Item.reviews == []">
+        <div v-if="userNew.Item.reviews.length != 0">
           <ReviewItem     
               v-for="review in userNew.Item.reviews" 
               :key = "review.id" 

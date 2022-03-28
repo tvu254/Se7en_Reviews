@@ -14,7 +14,9 @@
           <input type="checkbox" id="checkbox-1-1" class="custom-checkbox" />
           <label for="checkbox-1-1">Keep me Signed in</label>
           <button class="signin">Sign In</button>
-          <div class="invalid" v-if="state.invalid">Invalid username or password</div>
+        <div v-show="state.invalid">
+          <div class="invalid">Invalid username or password</div>
+        </div>
           <div class = 'registerLink'>
             <router-link to="/register">
               <a href="#">Don't have an account? Register</a>
@@ -61,8 +63,10 @@ export default {
         .then(function (data) {
           console.log(data)
           if (data == "Invalid Password") {
-            console.log("invalid username or password");
-            state.invalid = true    // somehow doesnt actually update the state??? should work otherwise though I think
+            console.log("Invalid username or password");
+            state.invalid = true;    // somehow doesnt actually update the state??? should work otherwise though I think
+            console.log(state.invalid);
+            state.password = '';
           }
           else
             console.log(data);  
@@ -78,7 +82,7 @@ export default {
         console.log(user.Item.username)
         await router.push('/');
       }
-
+console.log(state.invalid)
 
     return {
       state,

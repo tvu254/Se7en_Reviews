@@ -9,8 +9,14 @@
                 Verified
             </div>
             <br>
-            <div class = "userProfileFollowerCt">
+            <div class = "userProfileData">
                 <strong> Followers: </strong> {{ state.followers }}
+                <br>
+                <strong> Likes: </strong> {{ state.likes }}
+                <br>
+                <strong> Average Rating: </strong> {{ state.averageRating }}
+                <br>
+                <strong> Review Count: </strong> {{ state.reviews.length }}
             </div>
         </div>
 
@@ -90,6 +96,8 @@ export default {
         state.isVerified = user.Item.isVerified
         state.UserID = user.Item.UserID
         state.reviews = user.Item.reviews
+        state.likes = 0
+        state.averageRating = "N/A"
       }
 
     // ?: when Links are added to users, to redirect to a user page that isn't logged in
@@ -122,6 +130,8 @@ export default {
         lastName: '',
         isVerified: false,
         UserID: '',
+        likes: 0,
+        averageRating: "N/A",
         reviews: []
       })
 
