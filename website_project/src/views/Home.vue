@@ -1,9 +1,8 @@
 <template>
   <div class="home">
     <h1><strong>Welcome to uReview!</strong></h1>
-    <h2> This is the uReview alpha version. Feel free to explore features such as login, browse, and post :).  We are going to implement future features such as
-         comments, ratings, search, and more. Thank you for visiting! We will soon be adding artists, songnames, and albums to reviews, as well as the 
-         ability to edit and delete reviews.
+    <h2> This is the uReview alpha version. Feel free to explore login, browse, and post features :) -  
+         Comments, ratings, search, review editing, as well as stylistic updates are coming soon. Thank you for visiting!  
     </h2>
     <br>
     <div class="userList">

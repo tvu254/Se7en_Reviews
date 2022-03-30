@@ -91,7 +91,7 @@ export default {
             state.invalid = true
           }
           else if (data == "Invalid password") {
-            console.log("invalid username or password");
+            console.log("Passwords do not match");
             state.passwordMismatch = true
           }
           else {

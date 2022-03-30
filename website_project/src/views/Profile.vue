@@ -82,13 +82,11 @@ export default {
             console.log("Something went horribly wrong")
           }
           else 
-            // FIXME: STILL sets the user // figure out how the data is called and make it work throughout
             setProfile(data);
         })
         .catch(function (error) {
           console.warn('Something went horribly wrong.', error);
         });
-
 
       const setProfile = async (user) => {
         state.firstName = user.Item.firstName;
@@ -99,30 +97,6 @@ export default {
         state.likes = 0
         state.averageRating = "N/A"
       }
-
-    // ?: when Links are added to users, to redirect to a user page that isn't logged in
-    // 4: Load these reviews into the home page as well as the browse page, in some meaningful order/way
-    // 4.20: add links to the users names that direct to their page. clicking on the review expands it. For when we have more info there
-    // 5.5: Might need to have a date created in the review data, as well as account creation date
-    // 5.6: Add stats to user like average rating, past likes, total likes, etc. I think we should remove followers and just have average review rating and number of ratings. That way famous people's opinions wouldnt be more important
-    // 6: add artist, album, songname to review
-    // 8: Remove the post function in user profile page without website breaking
-    // 9: Add security to passwords
-    // ?: Add redirects to homepage/browse when necessary (right domain, wrong extension | or review that doesnt exist, etc)
-    // ?: Change userNew to user when other problem is fixed
-    // ?: Be able to edit specific values of your review - could be added as a separate page, linked to by both profile and post
-    // ?: Add click outside functionality for dropdown boxes
-    // ?: Order the reviews in reverse-id order so the newest is at front
-    // else: Launch app as website, get user testing
-
-    // BY PRESENTATION DAY
-    // links of reviewers take you to profile
-    // post panel removed from user page
-    // add date created to reviews and profiles
-    // add adding song, artist, album to review
-    // delete/edit review
-    //    ^--> this requires a drop-down box when clicking review. Asks for edit or delete. Edit will have to be it's own component. Data sent to flask will replace every value in current review, then entered. Delete asks if you are sure  
-    // register name updates
 
       const state = reactive({
         followers: 0,

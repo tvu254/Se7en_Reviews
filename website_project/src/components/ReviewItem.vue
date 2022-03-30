@@ -20,21 +20,34 @@
 
         </div>
         <div class = "reviewItemContent">
-             {{ review.content }}
+            {{ review.content }}
+<!--            <div v-if="fullReview != ''">
+                {{ shortReview }}   <strong>... read more</strong>
+            </div>
+            <div v-if="optionsToggle">
+                {{ fullReview}}
+            </div>
+        </div>
+        -->
         </div>
     </div>
 </div>
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, computed } from "vue";
+
 
 export default {
     name: "ReviewItem",
     setup(props, ctx) {
 
+        // make sure accesssing outside of substring doesn't break it. Doesn't seem to right now.
+        // Adds functionality for expanding reviews
         const optionsToggle = ref(false);
-
+        const reviewLength = computed(() => props.review.content.length);
+        const shortReview = props.review.content.substring(0, 110);
+        const fullReview = props.review.content.substring(110, reviewLength.value)
 
 
         function showOptions(id) {
@@ -44,7 +57,10 @@ export default {
 
         return {
             showOptions,
-            optionsToggle
+            optionsToggle,
+            reviewLength,
+            shortReview,
+            fullReview
         }
     },
     props:  {

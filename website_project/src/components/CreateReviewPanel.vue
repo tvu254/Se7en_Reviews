@@ -2,7 +2,7 @@
 <form class = "createReviewPanel" @submit.prevent = "createNewReview" :class="{ '--exceeded': newReviewCharacterCt > 2000 }">  <!-- stop submit button when > 2000 -->
 
     <label for = "newReview"> <strong>New Review:</strong></label>
-    <textarea id="newReview" rows = "4" v-model = "state.newReviewContent"/>
+    <textarea id="newReview" rows = "8" v-model = "state.newReviewContent"/>
 
   <div class="createReviewPanelSubmit">
     <div class = "createReviewType">
@@ -26,10 +26,10 @@
 
     <label for = "newReview"> <strong>Artist</strong></label>
     <textarea id="newReview" rows = "1" v-model = "state.newArtistContent"/>
-
+            <br>
     <label for = "newReview"> <strong>Album</strong></label>
     <textarea id="newReview" rows = "1" v-model = "state.newAlbumContent"/>
-
+            <br>
     <label for = "newReview"> <strong>Song Name</strong>  </label>
     <textarea id="newReview" rows = "1" v-model = "state.newSongNameContent"/>
 
@@ -60,6 +60,7 @@ export default {
                 //{ value: 'game', name: 'Game' },
                 //{ value: 'movie', name: 'Movie' }
 //            ],
+
             // will eventually need to display differently depending on what review type is chosen
             genres: [
                 { value: 'choose',              name: 'Choose' },
@@ -91,7 +92,10 @@ export default {
 
             if (state.newReviewContent !== 'choose') {
                 ctx.emit('add-review', newReviewList);
-                state.newReviewContent = '';             // eventually needs to not reset when characters > character limit
+                state.newReviewContent = '';             // eventually needs to not reset when characters > character limit, if it goes thru, reset fields
+                state.newArtistContent = '';
+                state.newAlbumContent = '';
+                state.newSongNameContent = '';
             }
             state.newReviewContent = '';
         }
