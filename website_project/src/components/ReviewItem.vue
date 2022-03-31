@@ -19,17 +19,20 @@
             <br>
 
         </div>
+
+        <!-- allows reviews to be expanded -->
         <div class = "reviewItemContent">
-            {{ review.content }}
-<!--            <div v-if="fullReview != ''">
-                {{ shortReview }}   <strong>... read more</strong>
+            <div v-if="fullReview != '' && !optionsToggle">
+                {{ shortReview }} ...<strong class = "readMore"> Read more</strong>
+            </div>
+            <div v-if="fullReview == '' && !optionsToggle">
+                {{ review.content }}
             </div>
             <div v-if="optionsToggle">
-                {{ fullReview}}
+                {{ review.content }}
             </div>
         </div>
-        -->
-        </div>
+        
     </div>
 </div>
 </template>
@@ -100,6 +103,10 @@ export default {
 
     .reviewContext {
         font-weight: normal;
+    }
+
+    .readMore {
+        color: rgb(82, 82, 82)
     }
 }
 </style>
