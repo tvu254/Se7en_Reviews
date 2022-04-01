@@ -19,16 +19,11 @@
         </div>
         <div v-else> Nothing yet :)</div>
     </div>
-        <div class = "followButton">
-            <button v-on:click="followUser">
-                Follow
-            </button>
-        </div>
-    </div>
+  </div>
 </template>
 
 <script>
-import { reactive, watch, computed } from 'vue';
+import { computed } from 'vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 import ReviewItem from "../components/ReviewItem.vue"
@@ -44,9 +39,6 @@ export default {
       const userNew = computed(() => store.state.User.user);
       const userId = computed(() => route.params.userId)
 
-      const state = reactive({
-        followers: 0,
-      })
 
       function addReview(newReviewList) {
         newReviewList[1] = newReviewList[1].charAt(0).toUpperCase() + newReviewList[1].slice(1);
@@ -89,23 +81,10 @@ export default {
         console.log(`Favorited Review = ${id}`)
       }
 
-      function followUser() {
-        state.followers++
-        //getUsers() // should be on created
-        console.log("data");
-      }
-
-      watch(() => state.followers, (followers, oldFollowerCount) => { 
-        if (oldFollowerCount < followers) {
-        console.log(`${state.user.username} has gained a follower`)
-        }
-      })
 
     return {
-        state,
         addReview,
         toggleFavorite,
-        followUser,
         userId,
         saveReview,
         userNew

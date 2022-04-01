@@ -23,6 +23,17 @@
       <label for="psw-repeat">Confirm Password</label>
       <input type="password" v-model="state.confirmPassword" placeholder="Repeat Password"
              name="psw-repeat" id="psw-repeat" required/>
+
+        <div v-show="state.invalid ">
+          <div class="invalid">Invalid data entered</div>
+        </div>
+        <div v-show="state.usernameTaken">
+          <div class="invalid">Username is already taken</div>
+        </div>
+        <div v-show="state.passwordMismatch">
+          <div class="invalid">Passwords do not match</div>
+        </div>
+
     </div>
     <hr>
     <p>By creating an account you agree to our
@@ -61,7 +72,8 @@ export default {
       email:  '',
       dateCreated: '',
       invalid: false,
-      passwordMismatch: false
+      passwordMismatch: false,
+      usernameTaken: false
     })
     
       const router = useRouter();
@@ -88,11 +100,21 @@ export default {
           console.log(data)
           if (data == "Invalid entry") {
             console.log("invalid entry");
+            state.passwordMismatch = false;
+            state.usernameTaken = false;
             state.invalid = true
           }
           else if (data == "Invalid password") {
             console.log("Passwords do not match");
+            state.invalid = false;
+            state.usernameTaken = false;
             state.passwordMismatch = true
+          }
+          else if (data == "Username already taken") {
+            console.log("Username taken");
+            state.invalid = false;
+            state.passwordMismatch = false;
+            state.usernameTaken = true
           }
           else {
             console.log(data);  
@@ -179,6 +201,13 @@ a {
 
 .con-signin {
   text-align: center;
+}
+
+.invalid {
+  color: dodgerblue;
+  padding-top: 15px;
+  text-align: center;
+  color: rgb(184, 0, 0)
 }
 
 </style>

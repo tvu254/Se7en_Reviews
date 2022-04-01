@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="homeAnnouncement">
     <h1><strong>Welcome to uReview!</strong></h1>
     <h2> This is the uReview alpha version. Feel free to explore login, browse, and post features :) -  
          Comments, ratings, search, review editing, as well as stylistic updates are coming soon. Thank you for visiting!  
@@ -94,8 +94,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.home {
-  padding: 50px 5%;
+
+.homeAnnouncement {
+  position: relative;
+  height: 300px;
+  width: 900px;
+  margin: auto;
+  padding: 50px 50px;
+  background: white;
+  background-size: cover;
   text-align: center;
 
   .userList {

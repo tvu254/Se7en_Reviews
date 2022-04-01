@@ -73,7 +73,9 @@ def loginPage():
 def Register():
     # get username from data sent
     userInfoJSON = request.json
-    if(userInfoJSON.get("data").get("username") == ''):
+
+    # checks for all fields filled in
+    if(userInfoJSON.get("data").get("username") == '' or userInfoJSON.get("data").get("firstName") == '' or userInfoJSON.get("data").get("lastName") == '' or userInfoJSON.get("data").get("email") == ''):
         return jsonify("Invalid entry")
 
     userInfo = dict(userInfoJSON)
@@ -81,21 +83,28 @@ def Register():
     if(userInfo.get("data").get("password") != userInfo.get("data").get("confirmPassword")):
         return jsonify("Invalid password")
 
-
     userTable = dynamodb.Table('Users')
-    userTable.put_item(
-        Item = {
-            "UserID": userInfo.get("data").get("username"),
-            "Password": userInfo.get("data").get("password"),
-            "lastName": userInfo.get("data").get("lastName"),
-            "isAdmin": False,
-            "reviews": [],
-            "email": userInfo.get("data").get("email"),
-            "firstName": userInfo.get("data").get("firstName"),
-            "dateCreated": userInfo.get("data").get("dateCreated"),
-            "isVerified": False
-        }
-    )
+    user = userTable.get_item(Key = {
+        "UserID": userInfo.get("data").get("username")
+    })
+    print(user)
+
+    if(len(user) != 2):
+        userTable.put_item(
+            Item = {
+                "UserID": userInfo.get("data").get("username"),
+                "Password": userInfo.get("data").get("password"),
+                "lastName": userInfo.get("data").get("lastName"),
+                "isAdmin": False,
+                "reviews": [],
+                "email": userInfo.get("data").get("email"),
+                "firstName": userInfo.get("data").get("firstName"),
+                "dateCreated": userInfo.get("data").get("dateCreated"),
+                "isVerified": False
+            }
+        )
+    else:
+        return jsonify("Username already taken")
 
     # put some check here, but for now it works
 

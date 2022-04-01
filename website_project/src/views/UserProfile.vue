@@ -64,7 +64,7 @@ import Profile from "../views/Profile";
 
 export default {
   name: 'UserProfile',
-  components: { ReviewItem, Profile },    // the emit from userReviews probably making it to where i cant remove createReviewPanel
+  components: { ReviewItem, Profile },  
   setup() {
       const store = useStore();
       const route = useRoute();
@@ -72,19 +72,20 @@ export default {
       const userId = computed(() => route.params.userId)
       const user = computed(() => store.state.User.user);
 
-    // 4.20:clicking on the review expands it. For when we have more info there
-    // ?: prevent submitting when over character limit
     // 5.6: Add stats to user like average rating, past likes, total likes, etc. I think we should remove followers and just have average review rating and number of ratings. That way famous people's opinions wouldnt be more important
     // 9: Add security to passwords
-    // ?: get invalid state to work for login/register - currently works every time except the first time lol
-    // ?: Add redirects to homepage/browse when necessary (right domain, wrong extension | or review that doesnt exist, etc)
+    // ?: add a show less after expanding review
     // ?: Be able to edit specific values of your review - could be added as a separate page, linked to by both profile and post
     // ?: Add click outside functionality for dropdown boxes
-    // fix the "nothing yet :)" from showing bc it takes a sec to load --> did not say nothing yet when testing just now
     // ?: Order the reviews in reverse-id order so the newest is at front
-    // ?: Gradually load reviews on browse instead of all at once
-    // else: Deploy app as website, get user testing
 
+    // else: Deploy app as website, get user testing
+    // eventually: 
+    // fix the "nothing yet :)" from showing bc it takes a sec to load
+    // Gradually load reviews on browse instead of all at once
+    // Add redirects to homepage/browse when necessary (right domain, wrong extension | or review that doesnt exist, etc)
+    // Make it look really nice
+    // doesnt check to see if every field is full on registration
 
     // BY PRESENTATION DAY
     // delete/edit review

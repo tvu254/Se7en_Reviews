@@ -19,7 +19,7 @@
         </div>
           <div class = 'registerLink'>
             <router-link to="/register">
-              <a href="#">Don't have an account? Register</a>
+              <a href="#">Don't have an account? Click to register</a>
             </router-link>
           </div>
         </form>
@@ -51,6 +51,7 @@ export default {
         password: state.password
         };
         console.log(data)
+        console.log(state.invalid)
         
         await fetch('http://localhost:5000/login', {
           method: 'POST',
@@ -61,16 +62,15 @@ export default {
         })
         .then((response) => response.json())
         .then(function (data) {
-          console.log(data)
           if (data == "Invalid Password") {
             console.log("Invalid username or password");
-            state.invalid = true;    // somehow doesnt actually update the state??? should work otherwise though I think
-            console.log(state.invalid);
+            state.invalid = true; 
             state.password = '';
           }
-          else
+          else {
             console.log(data);  
             setUser(data);
+          }
         })
         .catch(function (error) {
           console.warn('Something went horribly wrong.', error);
@@ -82,7 +82,7 @@ export default {
         console.log(user.Item.username)
         await router.push('/');
       }
-console.log(state.invalid)
+
 
     return {
       state,
@@ -244,4 +244,8 @@ a {
   color: black;
 }
 
+.invalid {
+  padding-top: 15px;
+    text-align: center;
+}
 </style>

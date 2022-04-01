@@ -1,7 +1,11 @@
 <template>
 <form class = "createReviewPanel" @submit.prevent = "createNewReview" :class="{ '--exceeded': newReviewCharacterCt > 2000 }">  <!-- stop submit button when > 2000 -->
 
-    <label for = "newReview"> <strong>New Review:</strong></label>
+    <label for = "newReview"> <strong>New Review:</strong>
+            {{ newReviewCharacterCt }} &nbsp; / &nbsp; 2000
+
+    </label>
+
     <textarea id="newReview" rows = "8" v-model = "state.newReviewContent"/>
 
   <div class="createReviewPanelSubmit">
@@ -33,7 +37,11 @@
     <label for = "newReview"> <strong>Song Name</strong>  </label>
     <textarea id="newReview" rows = "1" v-model = "state.newSongNameContent"/>
 
+        <div v-if="newReviewCharacterCt > 2000">
+            Limit Exceeded!
+        </div>
     </div>
+
     <button >
         Post Review
     </button>
@@ -48,6 +56,7 @@ export default {
     name: "CreateReviewPanel",
     setup(props, ctx) {
         const state = reactive({
+            exceeded: false,
             newReviewContent: '',
             newArtistContent: '',
             newAlbumContent: '',
@@ -88,16 +97,21 @@ export default {
 
         function createNewReview() {
             // converts review data into list to be sent (emitted) to addReview function in userProfile
-            var newReviewList = [state.newReviewContent, state.selectedGenre, state.newArtistContent, state.newAlbumContent, state.newSongNameContent, new Date()]
+            if (newReviewCharacterCt.value <= 2000) {
+                var newReviewList = [state.newReviewContent, state.selectedGenre, state.newArtistContent, state.newAlbumContent, state.newSongNameContent, new Date()]
 
-            if (state.newReviewContent !== 'choose') {
-                ctx.emit('add-review', newReviewList);
-                state.newReviewContent = '';             // eventually needs to not reset when characters > character limit, if it goes thru, reset fields
-                state.newArtistContent = '';
-                state.newAlbumContent = '';
-                state.newSongNameContent = '';
+                if (state.newReviewContent !== 'choose') {
+                    ctx.emit('add-review', newReviewList);
+                    state.newReviewContent = '';            
+                    state.newArtistContent = '';
+                    state.newAlbumContent = '';
+                    state.newSongNameContent = '';
+                }
+                state.newReviewContent = '';
             }
-            state.newReviewContent = '';
+            else {
+                state.exceeded = true
+            }
         }
 
         return {
@@ -114,6 +128,7 @@ export default {
     padding-top: 20px;
     display: flex;
     flex-direction: column;
+    border-color: red;
     
 
     textarea {
