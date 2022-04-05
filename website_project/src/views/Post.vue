@@ -61,7 +61,7 @@ export default {
 
       const saveReview = async (review) => {
         console.log(review)
-        await fetch('http://localhost:5000/post', {
+        await fetch('http://3.139.65.193/post', {
           method: 'POST',
           body: JSON.stringify({ review }),
           headers: {

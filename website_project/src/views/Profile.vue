@@ -61,7 +61,7 @@ export default {
           password: 'sgdfsd5897jds5hd3h3dfs56h4dhj56d4h756d545hftdh'
         };
 
-        fetch('http://localhost:5000/login', {
+        fetch('http://3.139.65.193/login', {
           method: 'POST',
           body: JSON.stringify({ data }),
           headers: {

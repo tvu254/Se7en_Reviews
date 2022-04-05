@@ -72,12 +72,14 @@ export default {
       const userId = computed(() => route.params.userId)
       const user = computed(() => store.state.User.user);
 
+    // CANT GO FROM RANDOM USER PAGE TO OWN HOME PAGE
     // 5.6: Add stats to user like average rating, past likes, total likes, etc. I think we should remove followers and just have average review rating and number of ratings. That way famous people's opinions wouldnt be more important
     // 9: Add security to passwords
     // ?: add a show less after expanding review
     // ?: Be able to edit specific values of your review - could be added as a separate page, linked to by both profile and post
     // ?: Add click outside functionality for dropdown boxes
     // ?: Order the reviews in reverse-id order so the newest is at front
+    // ?: 3 dots / dropdown menu for all reviews, different when signed in
 
     // else: Deploy app as website, get user testing
     // eventually: 

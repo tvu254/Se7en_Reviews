@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 import os, json, boto3, requests        # look up what requests does exactly
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
@@ -19,7 +18,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 @app.route("/")
 @app.route("/home")
 def Home():
-    return NULL
+    return None
 
 @app.route("/user/<userId>", methods = ['GET']) # GET is the default method and not required
 def userPage(userId):
@@ -178,7 +177,7 @@ def Browse():
 
 @app.route("/admin")
 def adminPage():
-    return NULL
+    return None
     
 
 if __name__ == '__main__':  # true only if run directly (not through flask run, from what I can tell)

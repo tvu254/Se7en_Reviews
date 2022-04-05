@@ -2,7 +2,7 @@
   <div class="homeAnnouncement">
     <h1><strong>Welcome to uReview!</strong></h1>
     <h2> This is the uReview alpha version. Feel free to explore login, browse, and post features :) -  
-         Comments, ratings, search, review editing, as well as stylistic updates are coming soon. Thank you for visiting!  
+         Comments, ratings, search, review editing, as well as stylistic updates are coming soon. Thank you for visiting!  (Edit and Delete are not working currently so uhhh don't mess up)
     </h2>
     <br>
     <div class="userList">
@@ -68,7 +68,7 @@ export default {
         })
 
         function getUsers() {
-            fetch('http://localhost:5000/browse', {
+            fetch('http://3.139.65.193/browse', {
                 method: "GET",
             })
             .then(resp => resp.json())
