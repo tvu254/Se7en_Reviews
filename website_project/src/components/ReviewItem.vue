@@ -23,7 +23,7 @@
         <!-- allows reviews to be expanded -->
         <div class = "reviewItemContent">
             <div v-if="fullReview != '' && !optionsToggle">
-                {{ shortReview }} ...<strong class = "readMore"> Read more</strong>
+                {{ shortReview }} ...<strong class = "readMoreShowLess"> Read more</strong>
             </div>
             <div v-if="fullReview == '' && !optionsToggle">
                 {{ review.content }}
@@ -33,6 +33,26 @@
             </div>
         </div>
         
+        <div v-if="optionsToggle">
+            <br>
+            <strong class = "readMoreShowLess"> (Click to show less) </strong>
+        </div>
+
+        <!-- edit and delete here // set ONLY if logged in -->
+      <div v-if="loggedIn == true">
+        <div v-if="optionsToggle">
+            <br>
+            <button dark class="cyan" @click="deleteReview(review.id)">
+                Delete
+            </button>
+            &nbsp; &nbsp;      
+        <router-link :to="{ name: 'Edit', params: {reviewId: review.id} }" :key="username">
+            <button dark class="cyan" @click="EditReview(review.id)">
+                Edit
+            </button>
+        </router-link>
+        </div>
+      </div>
     </div>
 </div>
 </template>
@@ -53,9 +73,18 @@ export default {
         const fullReview = props.review.content.substring(110, reviewLength.value)
 
 
-        function showOptions(id) {
-            ctx.emit('favorite', id)
+        function showOptions() {
             optionsToggle.value = !optionsToggle.value;
+        }
+
+        function deleteReview(id) {
+            console.log("in delete")
+           ctx.emit('deleteReview', id)
+        }
+
+        function EditReview(id) {
+            console.log(`in edit, id = ${id}`)
+            //ctx.emit('deleteReview', id)
         }
 
         return {
@@ -63,12 +92,18 @@ export default {
             optionsToggle,
             reviewLength,
             shortReview,
-            fullReview
+            fullReview,
+            EditReview,
+            deleteReview
         }
     },
     props:  {
         username: {
             type: String,
+            required: true
+        },
+        loggedIn: {
+            type: Boolean,
             required: true
         },
         review: {
@@ -105,8 +140,11 @@ export default {
         font-weight: normal;
     }
 
-    .readMore {
-        color: rgb(82, 82, 82)
+    .readMoreShowLess {
+        color: rgb(82, 82, 82);
+        padding: 0;
+        border: none;
+        background: none;
     }
 }
 </style>

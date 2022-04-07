@@ -10,15 +10,14 @@
       <br>
       <br>
 
+<!--  For reference later
       <div v-show="state.loaded">
         <router-link v-for="user in userList" :to="{ name: 'UserProfile', params: {userId: user.UserID} }" :key="user.UserID">
           {{ user.username }}
         </router-link>
       </div>
+-->
 
-      <router-link v-for="user in users" :to="{ name: 'UserProfile', params: {userId: user.id} }" :key="user.id">
-        {{ user.username }}
-      </router-link>
   </div>
       <div v-show="state.loaded">
         <div v-for="user in userList" :key = "user.reviews">
@@ -68,7 +67,7 @@ export default {
         })
 
         function getUsers() {
-            fetch('http://3.139.65.193/browse', {
+            fetch('http://localhost:5000/browse', {
                 method: "GET",
             })
             .then(resp => resp.json())

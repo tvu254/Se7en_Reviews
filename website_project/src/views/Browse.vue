@@ -40,12 +40,12 @@ export default {
         })
 
         function getUsers() {
-            fetch('http://3.139.65.193/browse', {
+            fetch('http://localhost:5000/browse', {
                 method: "GET",
             })
             .then(resp => resp.json())
             .then(data => {
-                // will eventually need to gradually load reviews so it doesnt overwhelm, this loads the whole table
+                // will eventually need to gradually load reviews so it doesnt overwhelm, this loads the whole table --> see vid about scrolling to load
                 for(let i = 0; i < (data.Items.length); i++) {
                     userList.unshift(data.Items[i])
                 }

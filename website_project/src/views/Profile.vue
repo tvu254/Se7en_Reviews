@@ -31,6 +31,7 @@
               v-for="review in state.reviews" 
               :key = "review.id" 
               :username = "state.UserID" 
+              :loggedIn = "false"
               :review = "review" 
               @favorite = "toggleFavorite"
           />
@@ -61,7 +62,7 @@ export default {
           password: 'sgdfsd5897jds5hd3h3dfs56h4dhj56d4h756d545hftdh'
         };
 
-        fetch('http://3.139.65.193/login', {
+        fetch('http://localhost:5000/login', {
           method: 'POST',
           body: JSON.stringify({ data }),
           headers: {

@@ -21,7 +21,7 @@
       </div>
 
       <div class = "navigationUser" v-if="user">
-        <router-link :to="`/user/${user.Item.UserID}`">
+        <router-link :to="`/user/profile/${user.Item.UserID}`">
           {{ user.Item.UserID }}
         </router-link>
       </div>

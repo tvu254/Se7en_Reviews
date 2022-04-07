@@ -5,16 +5,16 @@
     </div>
     <div class = "userReviewsWrapper">
         <div class = "reviewName">
-            {{ userNew.Item.UserID }}'s Reviews:
+            {{ user.Item.UserID }}'s Reviews:
         </div> 
 
-        <div v-if="userNew.Item.reviews.length != 0">
+        <div v-if="user.Item.reviews.length != 0">
           <ReviewItem     
-              v-for="review in userNew.Item.reviews" 
+              v-for="review in user.Item.reviews" 
               :key = "review.id" 
-              :username = "userNew.Item.UserID" 
+              :username = "user.Item.UserID" 
               :review = "review" 
-              @favorite = "toggleFavorite"
+              @deleteReview = "deleteReview"
           />
         </div>
         <div v-else> Nothing yet :)</div>
@@ -36,9 +36,51 @@ export default {
 
       const store = useStore();
       const route = useRoute();
-      const userNew = computed(() => store.state.User.user);
+      const user = computed(() => store.state.User.user);
       const userId = computed(() => route.params.userId)
 
+      function deleteReview(id) {
+      // scuffed because I can't call await methods without it being in a const function
+        const data = [id, user.value.Item.UserID]
+        sendDelete(data);
+      }
+
+      const sendDelete = async (data) => {
+        await fetch('http://localhost:5000/delete', {
+        method: 'POST',
+        body: JSON.stringify({ data }),     
+        headers: {
+            'Content-type': 'application/json',
+        }
+        })
+        .then((response) => response.json())        // flask returns a response object
+        .then(function (user) {
+            console.log(user);        // error catch is based on response. Not sure if works --> Also also needs to update the state-user
+            setUser(user) 
+        })
+        .catch(function (error) {
+          console.warn('Something went horribly wrong -->', error); 
+        });
+      }
+
+      // for updating state-user according to database 
+      const setUser = async (user) => {
+        await store.dispatch('User/setUser', user);
+        console.log(user.Item.username)
+      }
+
+      function getNewID(newID) {
+        // gets next highest id number for new review. Does not double as total review # bc user can delete highest-ID review
+        let highestID = 0;
+        for(let i = 0; i < user.value.Item.reviews.length; i++) {
+          if(user.value.Item.reviews[i].id > highestID) {
+            newID = user.value.Item.reviews[i].id;
+            highestID = newID
+          }
+        }
+        newID = parseInt(newID) + 1
+        return newID;
+      }
 
       function addReview(newReviewList) {
         newReviewList[1] = newReviewList[1].charAt(0).toUpperCase() + newReviewList[1].slice(1);
@@ -46,8 +88,11 @@ export default {
         newReviewList[3] = newReviewList[3].charAt(0).toUpperCase() + newReviewList[3].slice(1);
         newReviewList[4] = newReviewList[4].charAt(0).toUpperCase() + newReviewList[4].slice(1);
 
-        userNew.value.Item.reviews.unshift( {
-            id: userNew.value.Item.reviews.length + 1,
+        let newID = 0;
+        newID = getNewID(newID);
+
+        user.value.Item.reviews.unshift( {
+            id: newID,
             content: newReviewList[0],
             genre: newReviewList[1],
             artist: newReviewList[2],
@@ -56,12 +101,12 @@ export default {
             dateCreated: newReviewList[5],
 
         });
-        saveReview([userNew.value.Item.reviews[0], userNew.value.Item.UserID])
+        saveReview([user.value.Item.reviews[0], user.value.Item.UserID])
     }
 
       const saveReview = async (review) => {
         console.log(review)
-        await fetch('http://3.139.65.193/post', {
+        await fetch('http://localhost:5000/post', {
           method: 'POST',
           body: JSON.stringify({ review }),
           headers: {
@@ -77,17 +122,15 @@ export default {
         });
       };
 
-      function toggleFavorite(id) {
-        console.log(`Favorited Review = ${id}`)
-      }
-
 
     return {
         addReview,
-        toggleFavorite,
+        deleteReview,
+        sendDelete,
         userId,
         saveReview,
-        userNew
+        setUser,
+        user
     }
   },
 }

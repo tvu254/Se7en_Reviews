@@ -1,5 +1,5 @@
 <template>
-  <Profile v-if="state.notLoggedIn || ((state.UserID != state.userTestVal))"/>
+  <Profile v-if="state.notLoggedIn || ((state.UserID != state.userStateVal))"/>
   <div v-else>
     <div class = "userProfile">
       <div class="userProfileSidebar">
@@ -21,6 +21,12 @@
                 <strong> Review Count: </strong> {{ user.Item.reviews.length }}
             </div>
         </div>
+        <br>
+          <div class = "logoutButton">
+            <button v-on:click="logout">
+                Logout
+            </button>
+        </div>
     </div>
     <div class = "userReviewsWrapper">
         <div class = "reviewName">
@@ -31,9 +37,10 @@
           <ReviewItem     
               v-for="review in user.Item.reviews" 
               :key = "review.id" 
-              :username = "user.Item.UserID" 
+              :username = "user.Item.UserID"
+              :loggedIn = "true"
               :review = "review" 
-              @favorite = "toggleFavorite"
+              @deleteReview = "deleteReview"
           />
         </div>
         <div v-else> Nothing yet :)</div>
@@ -46,11 +53,7 @@
             </button>
         </div>
     -->
-        <div class = "logoutButton">
-            <button v-on:click="logout">
-                Logout
-            </button>
-        </div>
+
     </div>
   </div>
 </template>
@@ -72,31 +75,37 @@ export default {
       const userId = computed(() => route.params.userId)
       const user = computed(() => store.state.User.user);
 
-    // CANT GO FROM RANDOM USER PAGE TO OWN HOME PAGE
+
     // 5.6: Add stats to user like average rating, past likes, total likes, etc. I think we should remove followers and just have average review rating and number of ratings. That way famous people's opinions wouldnt be more important
     // 9: Add security to passwords
-    // ?: add a show less after expanding review
     // ?: Be able to edit specific values of your review - could be added as a separate page, linked to by both profile and post
     // ?: Add click outside functionality for dropdown boxes
     // ?: Order the reviews in reverse-id order so the newest is at front
     // ?: 3 dots / dropdown menu for all reviews, different when signed in
+    // ?: require first two sections on post to prevent garbage
+    // ?: youtube links? if song, link + lyrics, maybe at genius? USE MY BOT CODE WITH YOUTUBE-DL - show auto-found video w/ option to change it
+    // ?: album art / artist / relevant --> store image url, if not loaded = blank
+    // ?: search
 
-    // else: Deploy app as website, get user testing
+
     // eventually: 
     // fix the "nothing yet :)" from showing bc it takes a sec to load
-    // Gradually load reviews on browse instead of all at once
+    // Gradually load reviews on browse instead of all at once --> look up load on scroll --> https://www.youtube.com/watch?v=o7kQQ9mw-fs&ab_channel=ZarxBiz
     // Add redirects to homepage/browse when necessary (right domain, wrong extension | or review that doesnt exist, etc)
     // Make it look really nice
-    // doesnt check to see if every field is full on registration
+    // keep me signed in
+    // refresh still logs you out
 
     // BY PRESENTATION DAY
-    // delete/edit review
-    //    ^--> this requires a drop-down box when clicking review. Asks for edit or delete. Edit will have to be it's own component. Data sent to flask will replace every value in current review, then entered. Delete asks if you are sure  
- 
+    // else: Deploy app as website, domain name and ssl certs
+    // ************** delete --> this requires redoing the review id creation method because .length will no longer return the next highest value if one got deleted
+    // edit review
+    //    ^--> this requires a drop-down box (or buttons) when clicking review. Asks for edit or delete. Edit will have to be it's own component. Data sent to flask will replace every value in current review, then entered. Delete asks if you are sure  
+    // was thinking v-if editClicked, show edit screen via vue component, else show regular page. Transition and look tbd.
 
       const state = reactive({
         followers: 0,
-        userTestVal: '',
+        userStateVal: '',
         notLoggedIn: false,
         UserID: userId.value
       })
@@ -104,16 +113,42 @@ export default {
       // calls Profile component when not logged in. So the state is not set to an unlogged in user
       if(user.value === null) {
         state.notLoggedIn = true,
-        state.userTestVal = user.value
+        state.userStateVal = user.value
       }
       else {
-        state.userTestVal = user.value.Item.UserID
+        state.userStateVal = user.value.Item.UserID
         state.UserID = userId.value
       }
 
-      function toggleFavorite(id) {
-        console.log(`Favorited Review = ${id}`)
-    }
+      function deleteReview(id) {
+      // scuffed because I can't call await methods without it being in a const function
+        const data = [id, user.value.Item.UserID]
+        sendDelete(data);
+      }
+
+      const sendDelete = async (data) => {
+        await fetch('http://localhost:5000/delete', {
+        method: 'POST',
+        body: JSON.stringify({ data }),     
+        headers: {
+            'Content-type': 'application/json',
+        }
+        })
+        .then((response) => response.json())        // flask returns a response object
+        .then(function (user) {
+            console.log(user);        // error catch is based on response. Not sure if works --> Also also needs to update the state-user
+            setUser(user) 
+        })
+        .catch(function (error) {
+          console.warn('Something went horribly wrong -->', error); 
+        });
+      }
+
+      // for updating state-user according to database 
+      const setUser = async (user) => {
+        await store.dispatch('User/setUser', user);
+        console.log(user.Item.username)
+      }
 
       const logout = async () => {
         await store.dispatch('User/setUser', null);
@@ -128,9 +163,11 @@ export default {
 
     return {
         state,
-        toggleFavorite,
+        deleteReview,
+        setUser,
         userId,
         logout,
+        sendDelete,
         user
     }
   },

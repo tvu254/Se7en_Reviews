@@ -53,7 +53,7 @@ export default {
         console.log(data)
         console.log(state.invalid)
         
-        await fetch('http://3.139.65.193/login', {
+        await fetch('http://localhost:5000/login', {
           method: 'POST',
           body: JSON.stringify({ data }),
           headers: {

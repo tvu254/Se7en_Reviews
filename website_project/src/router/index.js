@@ -8,6 +8,7 @@ import Login from "../views/Login";
 import Post from "../views/Post";
 import Register from "../views/Register";
 import Profile from "../views/Profile";
+import Edit from "../views/Edit";
 
 const routes = [
   {
@@ -16,7 +17,7 @@ const routes = [
     component: Home
   },
   {
-    path: '/user/:userId',    // uses username as variable in URL
+    path: '/user/profile/:userId',    // uses username as variable in URL
     name: 'UserProfile',
     component: UserProfile
   },
@@ -44,6 +45,11 @@ const routes = [
     path: '/post',
     name: 'Post',
     component: Post
+  },
+  {
+    path: '/user/id=:reviewId',
+    name: 'Edit',
+    component: Edit
   },
   {
     path: '/admin',

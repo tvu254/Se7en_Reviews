@@ -88,7 +88,7 @@ export default {
         dateCreated: new Date()
         };
         
-        await fetch('http://3.139.65.193/register', {
+        await fetch('http://localhost:5000/register', {
           method: 'POST',
           body: JSON.stringify({ data }),
           headers: {

@@ -146,34 +146,54 @@ def post():
     return response
 
 
-
 @app.route("/browse")
 def Browse():
     userTable = dynamodb.Table('Users')
-    #userDataList = userTable.query(
-        #KeyConditionExpression=Key('UserID')
-    #)
-    #userTable = dict(userTable)
-
     response = userTable.scan()
-
-    # get user from table and return json
-    #userList = []
-    #userId = 1
-    #for i in range(0,5):
-        #user = userTable.get_item(Key = {
-            #"UserID": str(userId)
-        #})
-        #userList.append(user)
-        #userId += 1
-        #print("User number")
-        #print(userId)
-        #print(user)
-    #print('right here!!')
-    #print(userList)
-    #return jsonify(userList)
-
     return jsonify(response)
+
+@app.route("/delete", methods = ['GET', 'POST'])
+def Delete():
+    reviewInfoJSON = request.json
+    reviewInfo = dict(reviewInfoJSON)
+
+    reviewInfo = reviewInfo.get("data")
+    reviewInfo = list(reviewInfo)
+
+    userID = reviewInfo[1]
+    reviewNum = reviewInfo[0]
+    reviewNum = int(reviewNum)
+
+
+    # get dynamodb table 'Users', put review into user
+    userTable = dynamodb.Table('Users')                     # will eventually probably have to be more efficient, only get user from table. Unless it only gets a dynamo reference
+    user = userTable.get_item(Key = {
+        "UserID": userID
+    })
+
+    newReviewInfo = user.get("Item").get("reviews")
+    for i in range(0, len(newReviewInfo)):
+        print(i)
+        if newReviewInfo[i].get("id") == reviewNum:
+            del newReviewInfo[i]
+            break
+
+    response = userTable.update_item(
+        Key = {
+            "UserID": userID
+        },
+        UpdateExpression = "set reviews=:r",
+        ExpressionAttributeValues = {
+            ':r': newReviewInfo
+        }
+    )
+    print(response)
+
+    # return updated user
+    user = userTable.get_item(Key = {
+        "UserID": userID
+    })
+    return jsonify(user)
 
 @app.route("/admin")
 def adminPage():
