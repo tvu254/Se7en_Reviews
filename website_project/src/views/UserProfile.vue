@@ -31,15 +31,15 @@
     <div class = "userReviewsWrapper">
         <div class = "reviewName">
             {{ user.Item.UserID }}'s Reviews:
-        </div> 
+        </div>
 
         <div v-if="user.Item.reviews.length != 0">
-          <ReviewItem     
-              v-for="review in user.Item.reviews" 
-              :key = "review.id" 
+          <ReviewItem
+              v-for="review in user.Item.reviews"
+              :key = "review.id"
               :username = "user.Item.UserID"
               :loggedIn = "true"
-              :review = "review" 
+              :review = "review"
               @deleteReview = "deleteReview"
           />
         </div>
@@ -67,7 +67,7 @@ import Profile from "../views/Profile";
 
 export default {
   name: 'UserProfile',
-  components: { ReviewItem, Profile },  
+  components: { ReviewItem, Profile },
   setup() {
       const store = useStore();
       const route = useRoute();
@@ -75,33 +75,32 @@ export default {
       const userId = computed(() => route.params.userId)
       const user = computed(() => store.state.User.user);
 
-
-    // 5.6: Add stats to user like average rating, past likes, total likes, etc. I think we should remove followers and just have average review rating and number of ratings. That way famous people's opinions wouldnt be more important
+    // 5.6: Add stats to user like average rating, past likes, total likes, etc. I think we should remove follow>
     // 9: Add security to passwords
-    // ?: Be able to edit specific values of your review - could be added as a separate page, linked to by both profile and post
+    // ?: Be able to edit specific values of your review - could be added as a separate page, linked to by both >
     // ?: Add click outside functionality for dropdown boxes
     // ?: Order the reviews in reverse-id order so the newest is at front
     // ?: 3 dots / dropdown menu for all reviews, different when signed in
     // ?: require first two sections on post to prevent garbage
-    // ?: youtube links? if song, link + lyrics, maybe at genius? USE MY BOT CODE WITH YOUTUBE-DL - show auto-found video w/ option to change it
+    // ?: youtube links? if song, link + lyrics, maybe at genius? USE MY BOT CODE WITH YOUTUBE-DL - show auto-fo>
     // ?: album art / artist / relevant --> store image url, if not loaded = blank
     // ?: search
 
 
-    // eventually: 
+    // eventually:
     // fix the "nothing yet :)" from showing bc it takes a sec to load
-    // Gradually load reviews on browse instead of all at once --> look up load on scroll --> https://www.youtube.com/watch?v=o7kQQ9mw-fs&ab_channel=ZarxBiz
-    // Add redirects to homepage/browse when necessary (right domain, wrong extension | or review that doesnt exist, etc)
+    // Gradually load reviews on browse instead of all at once --> look up load on scroll --> https://www.youtub>
+    // Add redirects to homepage/browse when necessary (right domain, wrong extension | or review that doesnt ex>
     // Make it look really nice
     // keep me signed in
     // refresh still logs you out
 
     // BY PRESENTATION DAY
     // else: Deploy app as website, domain name and ssl certs
-    // ************** delete --> this requires redoing the review id creation method because .length will no longer return the next highest value if one got deleted
+    // ************** delete --> this requires redoing the review id creation method because .length will no lon>
     // edit review
-    //    ^--> this requires a drop-down box (or buttons) when clicking review. Asks for edit or delete. Edit will have to be it's own component. Data sent to flask will replace every value in current review, then entered. Delete asks if you are sure  
-    // was thinking v-if editClicked, show edit screen via vue component, else show regular page. Transition and look tbd.
+    //    ^--> this requires a drop-down box (or buttons) when clicking review. Asks for edit or delete. Edit wi>
+    // was thinking v-if editClicked, show edit screen via vue component, else show regular page. Transition and>
 
       const state = reactive({
         followers: 0,
@@ -129,22 +128,22 @@ export default {
       const sendDelete = async (data) => {
         await fetch('http://localhost:5000/delete', {
         method: 'POST',
-        body: JSON.stringify({ data }),     
+        body: JSON.stringify({ data }),
         headers: {
             'Content-type': 'application/json',
         }
         })
         .then((response) => response.json())        // flask returns a response object
         .then(function (user) {
-            console.log(user);        // error catch is based on response. Not sure if works --> Also also needs to update the state-user
-            setUser(user) 
+            console.log(user);        // error catch is based on response. Not sure if works --> Also also needs>
+            setUser(user)
         })
         .catch(function (error) {
-          console.warn('Something went horribly wrong -->', error); 
+          console.warn('Something went horribly wrong -->', error);
         });
       }
 
-      // for updating state-user according to database 
+      // for updating state-user according to database
       const setUser = async (user) => {
         await store.dispatch('User/setUser', user);
         console.log(user.Item.username)
@@ -155,7 +154,7 @@ export default {
         await router.push('/');
       }
 
-      watch(() => state.followers, (followers, oldFollowerCount) => { 
+      watch(() => state.followers, (followers, oldFollowerCount) => {
         if (oldFollowerCount < followers) {
         console.log(`${state.user.username} has gained a follower`)
         }
@@ -177,7 +176,7 @@ export default {
 <style lang="scss" scoped>
 
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
- 
+
 .userProfile {
     display: grid;
     grid-template-columns: 1fr 3fr;

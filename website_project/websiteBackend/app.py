@@ -116,7 +116,7 @@ def Register():
 
 
 @app.route("/post", methods = ['GET', 'POST'])
-def post():
+def Post():
     reviewInfoJSON = request.json
     reviewInfo = dict(reviewInfoJSON)
     reviewInfo = reviewInfo.get("review")
@@ -145,6 +145,59 @@ def post():
 
     return response
 
+@app.route("/edit", methods = ['GET', 'POST'])
+def Edit():
+    reviewInfoJSON = request.json
+    reviewInfo = dict(reviewInfoJSON)
+    reviewInfo = reviewInfo.get("data")
+    print(reviewInfo)
+    userID = reviewInfo[1]
+    reviewInfo = reviewInfo[0]
+    print(userID)
+    print(reviewInfo)
+
+    # get dynamodb table 'Users', put review into user
+    userTable = dynamodb.Table('Users')                     # will eventually probably have to be more efficient, only get user from table. Unless it only gets a dynamo reference
+    user = userTable.get_item(Key = {
+        "UserID": userID
+    })
+
+    newReviewInfo = user.get("Item").get("reviews")
+    reviewID = reviewInfo.get("id")
+    print(newReviewInfo)
+    print("reviewID")
+    print(reviewID)
+    print(".get")
+
+    reviewID = int(reviewID)
+    deleteReviewNum = 0
+    for i in range(0,len(newReviewInfo)):
+        print(newReviewInfo[i].get("id"))
+        if reviewID == newReviewInfo[i].get("id"):
+            print("in if")
+            print(newReviewInfo[i].get("id"))
+            deleteReviewNum = i
+    newReviewInfo = list(newReviewInfo)
+    print(deleteReviewNum)
+    print("deleted Review")
+    print(newReviewInfo[deleteReviewNum])
+    del newReviewInfo[deleteReviewNum]
+    newReviewInfo.append(reviewInfo)
+    print("after changes")
+    print(newReviewInfo)
+
+
+    response = userTable.update_item(
+        Key = {
+            "UserID": userID
+        },
+        UpdateExpression = "set reviews=:r",
+        ExpressionAttributeValues = {
+            ':r': newReviewInfo
+        }
+    )
+
+    return response
 
 @app.route("/browse")
 def Browse():
@@ -173,7 +226,7 @@ def Delete():
 
     newReviewInfo = user.get("Item").get("reviews")
     for i in range(0, len(newReviewInfo)):
-        print(i)
+
         if newReviewInfo[i].get("id") == reviewNum:
             del newReviewInfo[i]
             break

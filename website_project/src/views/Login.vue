@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="handleSubmit">
+  <form>
     <div class="con">
       <div class="login">
         <header>
@@ -80,7 +80,7 @@ export default {
       const setUser = async (user) => {
         await store.dispatch('User/setUser', user);
         console.log(user.Item.username)
-        await router.push('/');
+        await router.push('/user/profile/Jakobeus');
       }
 
 

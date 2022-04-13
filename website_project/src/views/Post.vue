@@ -13,6 +13,7 @@
               v-for="review in user.Item.reviews" 
               :key = "review.id" 
               :username = "user.Item.UserID" 
+              :loggedIn = "true"
               :review = "review" 
               @deleteReview = "deleteReview"
           />

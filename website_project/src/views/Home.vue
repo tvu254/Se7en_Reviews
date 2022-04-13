@@ -30,7 +30,8 @@
                     v-for="review in user.reviews" 
                     :key = "review.id" 
                     :username = "UserID" 
-                    :review = "review" 
+                    :loggedIn = "false"
+                    :review = "review"
                     @favorite = "toggleFavorite"
                 />
                 <br>

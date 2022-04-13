@@ -1,11 +1,12 @@
 <template>
 <div class = "reviewItem" @click="showOptions(review.id)">
     <div class = "userProfileReview">
+      <div v-if="!state.edit">
         <div class = "userReviewItem">
-            {{ username }}
+            <!--{{ username }}-->
         </div>
         <div class = "reviewContext"> 
-            Genre - {{ review.genre }} 
+            <!--Genre - {{ review.genre }}-->
 
             <div v-if="review.artist != ''">
                 Artist - {{ review.artist }} 
@@ -46,47 +47,54 @@
                 Delete
             </button>
             &nbsp; &nbsp;      
-        <router-link :to="{ name: 'Edit', params: {reviewId: review.id} }" :key="username">
+        <!--<router-link :to="{ name: 'Edit', params: {reviewId: review.id} }" :key="username">-->
             <button dark class="cyan" @click="EditReview(review.id)">
                 Edit
             </button>
-        </router-link>
+        <!--</router-link>-->
         </div>
       </div>
+     </div>
+     <div v-else>
+        <Edit :username = "username" :review = "review" @showOptions = "showOptions"/>
+     </div>
     </div>
 </div>
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { ref, computed, reactive } from "vue";
+import Edit from "../views/Edit.vue";
 
 
 export default {
     name: "ReviewItem",
     setup(props, ctx) {
-
         // make sure accesssing outside of substring doesn't break it. Doesn't seem to right now.
         // Adds functionality for expanding reviews
         const optionsToggle = ref(false);
         const reviewLength = computed(() => props.review.content.length);
         const shortReview = props.review.content.substring(0, 110);
-        const fullReview = props.review.content.substring(110, reviewLength.value)
-
-
+        const fullReview = props.review.content.substring(110, reviewLength.value);
+        const state = reactive({
+            edit: false
+        });
+        console.log("review here")
+        console.log(props.review)
+        // state v-if edit-on --> on every review. Edit switches this
         function showOptions() {
             optionsToggle.value = !optionsToggle.value;
         }
-
         function deleteReview(id) {
-            console.log("in delete")
-           ctx.emit('deleteReview', id)
+            console.log("in delete");
+            ctx.emit("deleteReview", id);
         }
-
         function EditReview(id) {
-            console.log(`in edit, id = ${id}`)
-            //ctx.emit('deleteReview', id)
+            console.log(`in edit, id = ${id}`);
+            state.edit = !state.edit;
+            console.log(state.edit);
+            optionsToggle.value = !optionsToggle.value;
         }
-
         return {
             showOptions,
             optionsToggle,
@@ -94,10 +102,11 @@ export default {
             shortReview,
             fullReview,
             EditReview,
-            deleteReview
-        }
+            deleteReview,
+            state
+        };
     },
-    props:  {
+    props: {
         username: {
             type: String,
             required: true
@@ -110,7 +119,8 @@ export default {
             type: Object,
             required: true
         }
-    }
+    },
+    components: { Edit }
 };
 </script>
 
