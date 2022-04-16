@@ -74,8 +74,8 @@ export default {
         // Adds functionality for expanding reviews
         const optionsToggle = ref(false);
         const reviewLength = computed(() => props.review.content.length);
-        const shortReview = props.review.content.substring(0, 110);
-        const fullReview = props.review.content.substring(110, reviewLength.value);
+        const shortReview = props.review.content.substring(0, 95);
+        const fullReview = props.review.content.substring(95, reviewLength.value);
         const state = reactive({
             edit: false
         });

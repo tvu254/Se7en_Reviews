@@ -150,11 +150,8 @@ def Edit():
     reviewInfoJSON = request.json
     reviewInfo = dict(reviewInfoJSON)
     reviewInfo = reviewInfo.get("data")
-    print(reviewInfo)
     userID = reviewInfo[1]
     reviewInfo = reviewInfo[0]
-    print(userID)
-    print(reviewInfo)
 
     # get dynamodb table 'Users', put review into user
     userTable = dynamodb.Table('Users')                     # will eventually probably have to be more efficient, only get user from table. Unless it only gets a dynamo reference
@@ -164,29 +161,19 @@ def Edit():
 
     newReviewInfo = user.get("Item").get("reviews")
     reviewID = reviewInfo.get("id")
-    print(newReviewInfo)
-    print("reviewID")
-    print(reviewID)
-    print(".get")
 
+    # gets review with correct id to replace
     reviewID = int(reviewID)
     deleteReviewNum = 0
     for i in range(0,len(newReviewInfo)):
-        print(newReviewInfo[i].get("id"))
         if reviewID == newReviewInfo[i].get("id"):
-            print("in if")
-            print(newReviewInfo[i].get("id"))
             deleteReviewNum = i
     newReviewInfo = list(newReviewInfo)
-    print(deleteReviewNum)
-    print("deleted Review")
-    print(newReviewInfo[deleteReviewNum])
     del newReviewInfo[deleteReviewNum]
     newReviewInfo.append(reviewInfo)
-    print("after changes")
-    print(newReviewInfo)
 
 
+    # replace review, put into db
     response = userTable.update_item(
         Key = {
             "UserID": userID
@@ -197,7 +184,13 @@ def Edit():
         }
     )
 
-    return response
+    # get updated user -> scuffed efficiency, maybe response returns the new user somewhere in there
+    userTable = dynamodb.Table('Users')                     # will eventually probably have to be more efficient
+    user = userTable.get_item(Key = {
+        "UserID": userID
+    })
+
+    return user
 
 @app.route("/browse")
 def Browse():
