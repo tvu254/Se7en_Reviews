@@ -64,6 +64,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #0d1424;
   min-height: 100vh;
+  background-color: #ececec;
 
   nav {
     display: flex;
