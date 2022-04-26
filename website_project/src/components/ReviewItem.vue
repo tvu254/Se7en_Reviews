@@ -56,12 +56,7 @@
       </div>
      </div>
      <div v-else>
-        <div v-if="state.delete">
-            <Delete :username = "username" :review = "review" :edit = "state.edit" @showOptions = "showOptions"/>
-        </div>
-        <div v-else>
-            <Edit :username = "username" :review = "review" :edit = "state.edit" @showOptions = "showOptions"/>
-        </div>
+        <Edit :username = "username" :review = "review" @showOptions = "showOptions"/>
      </div>
     </div>
 </div>
@@ -70,12 +65,11 @@
 <script>
 import { ref, computed, reactive } from "vue";
 import Edit from "../views/Edit.vue";
-import Delete from "../components/Delete.vue"
 
 
 export default {
     name: "ReviewItem",
-    setup(props) {
+    setup(props, ctx) {
         // make sure accesssing outside of substring doesn't break it. Doesn't seem to right now.
         // Adds functionality for expanding reviews
         const optionsToggle = ref(false);
@@ -83,21 +77,17 @@ export default {
         const shortReview = props.review.content.substring(0, 95);
         const fullReview = props.review.content.substring(95, reviewLength.value);
         const state = reactive({
-            edit: false,
-            delete: false
+            edit: false
         });
-
+        console.log("review here")
+        console.log(props.review)
         // state v-if edit-on --> on every review. Edit switches this
         function showOptions() {
             optionsToggle.value = !optionsToggle.value;
         }
         function deleteReview(id) {
-            // need to call delete after asking if sure
-            console.log(`in delete, id = ${id}`);
-            state.edit = !state.edit;
-            state.delete = !state.delete;
-            optionsToggle.value = !optionsToggle.value;
-            //ctx.emit("deleteReview", id);
+            console.log("in delete");
+            ctx.emit("deleteReview", id);
         }
         function EditReview(id) {
             console.log(`in edit, id = ${id}`);
@@ -130,7 +120,7 @@ export default {
             required: true
         }
     },
-    components: { Edit, Delete }
+    components: { Edit }
 };
 </script>
 
