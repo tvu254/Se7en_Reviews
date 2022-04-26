@@ -70,7 +70,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     padding: 10px 5%;
-    background-color: rgba(0, 74, 124, .9);
+    background-color: rgba(0, 74, 124, .8);
     color: #d6d6d6;
 
     .navigationLogo {
