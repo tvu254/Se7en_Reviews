@@ -62,29 +62,24 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #d6d6d6;
+  color: #0d1424;
   min-height: 100vh;
-  background-color: #333333;
-
   nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px 5%;
-    background-color: #000038;
+    background-color: rgba(0, 74, 124, .9);
     color: #d6d6d6;
-
     .navigationLogo {
       display: flex;
       width: auto;
       height: 40px;
-
       &:hover {
         filter: brightness(150%);
         transform: scale(1.01, 1.01);
       }
     }
-
     .navigationUser {
       font-weight: normal;
       font-size: 18px;
@@ -92,13 +87,11 @@ export default {
       &:hover {
         transform: scale(1.025, 1.025);
         filter: brightness(150%);
-
         .loginRegister {
           font-size: 34px;
         }
       }
     }
-
     .userPost {
       font-weight: normal;
       font-size: 18px;
@@ -108,12 +101,10 @@ export default {
         filter: brightness(150%);
       }
     }
-
     .browse {
       font-weight: bold;
       font-size: 18px;
       align-items: center;
-
       &:hover {
         transform: scale(1.025, 1.025);
         filter: brightness(150%);
@@ -124,7 +115,6 @@ export default {
       font-weight: normal;
       font-size: 18px;
       align-items: center;
-
       &:hover {
         transform: scale(1.025, 1.025);
         filter: brightness(150%);

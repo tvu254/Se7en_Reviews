@@ -170,10 +170,3 @@ export default {
 
 
 </style>
-
-
-//  background: rgba(0, 97, 161, 0.9);
-<!-- HTML !-->
-<button class="button-24" role="button">Button 24</button>
-
-/* CSS */

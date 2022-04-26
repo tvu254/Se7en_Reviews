@@ -149,7 +149,6 @@ export default {
             margin-top: 10px;
         }
         .button {
-            padding-top: 2px;
             max-height: 30px;
         }
     }
