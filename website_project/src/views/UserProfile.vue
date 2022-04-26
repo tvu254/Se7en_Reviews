@@ -83,7 +83,6 @@ export default {
     // ?: youtube links? if song, link + lyrics, maybe at genius? USE MY BOT CODE WITH YOUTUBE-DL - show auto-fo>
     // ?: album art / artist / relevant --> store image url, if not loaded = blank
     // ?: search
-    // ?: multiple reviews being edited breaks --> replaces wrong review I think
 
 
     // eventually:
