@@ -2,9 +2,9 @@
     <div class = "userProfile">
       <div class="userProfileSidebar">
         <div class = "userProfilePanel">
-            <h1 class = "userProfileUsername">{{ userId }}</h1>
+            <h1 class = "userProfileUsername">{{ state.firstName }} {{ state.lastName }}</h1>
             <h1> &nbsp; AKA </h1>
-            <h1> {{ state.firstName }} {{ state.lastName }} </h1>
+            <h1> {{ userId }} </h1>
             <div class = "verifiedBadge" v-if="state.isVerified">
                 Verified
             </div>

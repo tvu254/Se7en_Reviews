@@ -4,9 +4,9 @@
     <div class = "userProfile">
       <div class="userProfileSidebar">
         <div class = "userProfilePanel">
-            <h1 class = "userProfileUsername">{{ userId }}</h1>
+            <h1 class = "userProfileUsername">{{ user.Item.firstName }} {{ user.Item.lastName }}</h1>
             <h1> &nbsp; AKA </h1>
-            <h1> {{ user.Item.firstName }} {{ user.Item.lastName }} </h1>
+            <h1> {{ userId }} </h1>
             <div class = "verifiedBadge" v-if="user.Item.isVerified">
                 Verified
             </div>
@@ -30,7 +30,7 @@
     </div>
     <div class = "userReviewsWrapper">
         <div class = "reviewName">
-            Your Reviews
+            {{ user.Item.UserID }}'s Reviews:
         </div>
 
         <div v-if="user.Item.reviews.length != 0">
@@ -75,33 +75,32 @@ export default {
       const userId = computed(() => route.params.userId)
       const user = computed(() => store.state.User.user);
 
-
+    // 5.6: Add stats to user like average rating, past likes, total likes, etc. I think we should remove follow>
     // 9: Add security to passwords
     // ?: Be able to edit specific values of your review - could be added as a separate page, linked to by both >
-
+    // ?: Add click outside functionality for dropdown boxes
+    // ?: Order the reviews in reverse-id order so the newest is at front
+    // ?: 3 dots / dropdown menu for all reviews, different when signed in
     // ?: require first two sections on post to prevent garbage
     // ?: youtube links? if song, link + lyrics, maybe at genius? USE MY BOT CODE WITH YOUTUBE-DL - show auto-fo>
     // ?: album art / artist / relevant --> store image url, if not loaded = blank
     // ?: search
-    // ?: multiple reviews being edited breaks --> replaces wrong review I think
 
 
     // eventually:
+    // fix the "nothing yet :)" from showing bc it takes a sec to load
     // Gradually load reviews on browse instead of all at once --> look up load on scroll --> https://www.youtub>
     // Add redirects to homepage/browse when necessary (right domain, wrong extension | or review that doesnt ex>
-    // ?: Add click outside functionality for dropdown boxes
-    // if not logged in block any /profile domains
-    // profile.vue uses login fetch
-    // /user/userID is useless rn btw
+    // Make it look really nice
+    // keep me signed in
+    // refresh still logs you out
 
     // BY PRESENTATION DAY
     // else: Deploy app as website, domain name and ssl certs
-    // 5.6: Add stats to user like average rating, past likes, total likes, etc. I think we should remove follow>
-    // ?: Order the reviews in reverse-id order so the newest is at front
-    // keep me signed in
-    // refresh still logs you out
-    // Make it look really nice
-    // if read more not necessary, dont put. if (110 long) for example
+    // ************** delete --> this requires redoing the review id creation method because .length will no lon>
+    // edit review
+    //    ^--> this requires a drop-down box (or buttons) when clicking review. Asks for edit or delete. Edit wi>
+    // was thinking v-if editClicked, show edit screen via vue component, else show regular page. Transition and>
 
       const state = reactive({
         followers: 0,
@@ -123,8 +122,6 @@ export default {
       function deleteReview(id) {
       // scuffed because I can't call await methods without it being in a const function
         const data = [id, user.value.Item.UserID]
-        console.log("data")
-        console.log(data)
         sendDelete(data);
       }
 

@@ -1,22 +1,21 @@
 <template>
-<div v-if="edit == true" class = "userProfileReview">
+<div class = "userProfileReview">
   <div class = "userReviewItem">
     <div class = "reviewContext"> 
       <div class = "reviewItemContent">
-  <div>
-    <form @submit.prevent="handleSubmit(review.id)">
-            <span>Artist - &nbsp;</span>
+  <div @click="showOptions(review.id)">
+    <form @submit.prevent="handleSubmit">
+            <span>Artist -</span>
             <input type="text" class="text" v-model="state.review.artist" name="artist">
             <br>
-            <span>Album - &nbsp;</span>
+            <span>Album -</span>
             <input type="text" class="text" v-model="state.review.album" name="album">
             <br>
-            <span>Songname - &nbsp;</span>
+            <span>Songname -</span>
             <input type="text" class="text" v-model="state.review.songname" name="songname">
             <br>
-            <br>
-            <textarea class="text" rows = "8" cols="50" v-model="state.review.content" name="content"/> 
-            <!-- <input type="text" class="text" v-model="state.review.content" name="content">-->
+            <span>Content -</span>
+            <input type="text" class="text" v-model="state.review.content" name="content">
             <br>
             
             <!-- if edited, show button, else just have back button -->
@@ -33,10 +32,6 @@
 </div>
 </div>
 
-<!-- for delete -->
-<div v-else>
-does this show up
-</div>
 </template>
 
 <script>
@@ -56,19 +51,20 @@ export default {
             invalid: false
         });
 
+        function showOptions(id) {
+            ctx.emit("showOptions", id);
+        }
 
         onMounted(() => {
           state.username = props.username;
-          props.edit == false;
           state.review = props.review
         })
 
-      function handleSubmit(id) {
+      function handleSubmit() {
       // scuffed because I can't call await methods without it being in a const function
       // converts review id into int, is string. Need to figure out why this happens but for now I want it fixed.
         state.review.id = parseInt(state.review.id)
         const data = [props.review, state.username]
-        ctx.emit("showOptions", id);
         console.log("data")
         console.log(data)
         commitReview(data);
@@ -99,6 +95,7 @@ export default {
       }
         return {
             handleSubmit,
+            showOptions,
             commitReview,
             setUser,
             state
@@ -112,16 +109,12 @@ export default {
         review: {
             type: Object,
             required: true
-        },
-        edit: {
-            type: Boolean,
-            required: true
         }
     },
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 .reviewItem {
     padding: 12px;
     background-color: #ececec;
@@ -133,9 +126,7 @@ export default {
     width: 550px;
     margin: auto;
     margin-top: 5px;
-    font-size: 18px;   
-
-}
+    //font-size: 18px;   --> if I use serif instead of arial
 
     .userReviewItem {
         font-weight: bold;
@@ -144,35 +135,5 @@ export default {
     .reviewContext {
         font-weight: normal;
     }
-
-    input[type=text] {
-      background-color: #ececec;
-      font-family: Avenir, Helvetica, Arial, sans-serif;
-      color: #0d1424;
-      border: none;
-      font-size: 16px;  
-    }
-
-    textarea {
-      background-color: #ececec;
-      font-family: Avenir, Helvetica, Arial, sans-serif;
-      color: #0d1424;
-      border: none;
-      font-size: 18px;  
-      resize: none;
-      text-align: center;
-    }
-
-    input[type=text]:focus {
-      background-color: #ececec;
-      font-family: Avenir, Helvetica, Arial, sans-serif;
-      color: #0d1424;
-      border: none;
-      font-size: 18px;    
-    }
-
-    text {
-      font-size: 16px;  
-      text-align: center; 
-    }
+}
 </style>
