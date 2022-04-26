@@ -42,7 +42,7 @@
         </div>
     </div>
 
-    <button >
+    <button class = "button">
         Post Review
     </button>
   </div>
@@ -148,17 +148,8 @@ export default {
             text-align: center;
             margin-top: 10px;
         }
-
-        button {
-            padding: 5px 20px;
-            margin: auto 0;
-            margin-top: 7px;
-            border: 1px #cc26a2;
-            border-radius: 5px;
-            background-color: #b9b9b9;
-            color: #0d1424;
-            font-weight: bold;
-            cursor: pointer;
+        .button {
+            max-height: 30px;
         }
     }
 

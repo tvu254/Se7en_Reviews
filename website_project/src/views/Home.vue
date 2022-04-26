@@ -1,7 +1,8 @@
 <template>
   <div class="homeAnnouncement">
     <h1><strong>Welcome to uReview!</strong></h1>
-    <h2> This is the uReview alpha version. Feel free to explore login, browse, and post features :) - Comments, ratings, search, review editing, as well as stylistic updates are coming soon. Thank you for visiting!
+    <h2> This is the uReview alpha version. Feel free to explore the features and leave a review of your favorite artist, album or song :) &nbsp;
+         Comments, ratings, search, review editing, as well as stylistic updates are coming soon. Thank you for visiting!
     </h2>
     <br>
 
@@ -15,10 +16,11 @@
 </div>
 
     <div class="userList">
-    <strong>Featured Reviews</strong>
-    <br>
-    <br>
-  </div>
+      <div class = "featured">
+        <strong>Featured Reviews</strong>
+      </div>
+      <br>
+      <br>
 
 <!--  For reference later
       <div v-show="state.loaded">
@@ -120,17 +122,10 @@ export default {
     font-size: 22px;
   }
 
-  .homeNewReleases {
-  position: relative;
-  height: 100px;
-  width: 250px;
-  margin: auto;
-  padding: 50px 50px;
-  //background: white;
-  background-size: cover;
-  text-align: center;
-}
-
-
+  .featured {
+    padding-top: 30px;
+    text-decoration: underline;
+    font-size: 28px;
+  }
 }
 </style>
