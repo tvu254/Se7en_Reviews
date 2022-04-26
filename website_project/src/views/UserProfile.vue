@@ -23,7 +23,7 @@
         </div>
         <br>
           <div class = "logoutButton">
-            <button v-on:click="logout">
+            <button class = "button" v-on:click="logout">
                 Logout
             </button>
         </div>

@@ -1,12 +1,14 @@
 <template>
   <div class="homeAnnouncement">
     <h1><strong>Welcome to uReview!</strong></h1>
-    <h2> This is the uReview alpha version. Feel free to explore login, browse, and post features :) -  
-         Comments, ratings, search, review editing, as well as stylistic updates are coming soon. Thank you for visiting!  (Edit and Delete are not working currently so uhhh don't mess up)
+    <h2> This is the uReview alpha version. Feel free to explore the features and leave a review of your favorite artist, album or song :) &nbsp;
+         Comments, ratings, search, review editing, as well as stylistic updates are coming soon. Thank you for visiting!
     </h2>
     <br>
     <div class="userList">
-      <strong>Featured Reviews</strong>
+      <div class = "featured">
+        <strong>Featured Reviews</strong>
+      </div>
       <br>
       <br>
 
@@ -109,6 +111,12 @@ export default {
     display: flex;
     flex-direction: column;
     font-size: 22px;
+  }
+
+  .featured {
+    padding-top: 30px;
+    text-decoration: underline;
+    font-size: 28px;
   }
 }
 </style>

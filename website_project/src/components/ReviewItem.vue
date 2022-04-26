@@ -34,7 +34,7 @@
             </div>
         </div>
         
-        <div v-if="optionsToggle">
+        <div v-if="optionsToggle && (!fullReview == '')">
             <br>
             <strong class = "readMoreShowLess"> (Click to show less) </strong>
         </div>
@@ -43,12 +43,12 @@
       <div v-if="loggedIn == true">
         <div v-if="optionsToggle">
             <br>
-            <button dark class="cyan" @click="deleteReview(review.id)">
+            <button dark class="button" @click="deleteReview(review.id)">
                 Delete
             </button>
             &nbsp; &nbsp;      
         <!--<router-link :to="{ name: 'Edit', params: {reviewId: review.id} }" :key="username">-->
-            <button dark class="cyan" @click="EditReview(review.id)">
+            <button dark class="button" @click="EditReview(review.id)">
                 Edit
             </button>
         <!--</router-link>-->
@@ -167,4 +167,13 @@ export default {
         background: none;
     }
 }
+
+
 </style>
+
+
+//  background: rgba(0, 97, 161, 0.9);
+<!-- HTML !-->
+<button class="button-24" role="button">Button 24</button>
+
+/* CSS */

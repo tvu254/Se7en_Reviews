@@ -131,4 +131,40 @@ export default {
     }
   }
 }
+
+.button {
+  background: rgba(0, 97, 161, 0.9);
+  border: 2px solid rgba(0, 97, 161, 0.9);
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 16px;
+  min-height: 30px;
+  outline: 0;
+  padding: 2px 14px;
+  text-align: center;
+  text-rendering: geometricprecision;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+}
+
+.button:hover,
+.button:active {
+  background-color: initial;
+  background-position: 0 0;
+  color: rgba(26, 26, 26, 0.9);
+}
+
+.button:active {
+  opacity: .5;
+}
 </style>
