@@ -62,15 +62,16 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #0d1424;
+  color: #d6d6d6;
   min-height: 100vh;
+  background-color: #333333;
 
   nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px 5%;
-    background-color: rgba(0, 74, 124, .9);
+    background-color: #000038;
     color: #d6d6d6;
 
     .navigationLogo {

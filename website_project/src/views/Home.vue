@@ -1,14 +1,24 @@
 <template>
   <div class="homeAnnouncement">
     <h1><strong>Welcome to uReview!</strong></h1>
-    <h2> This is the uReview alpha version. Feel free to explore login, browse, and post features :) -  
-         Comments, ratings, search, review editing, as well as stylistic updates are coming soon. Thank you for visiting!  (Edit and Delete are not working currently so uhhh don't mess up)
+    <h2> This is the uReview alpha version. Feel free to explore login, browse, and post features :) - Comments, ratings, search, review editing, as well as stylistic updates are coming soon. Thank you for visiting!
     </h2>
     <br>
+
+    <div class="homeReleases">
+     <h1>Upcoming Releases</h1>
+  <img src="../assets/zeit.jpg" alt="Zeit by Ramnstein" style="width:12.5%">
+  <img src="../assets/voltage.jpg" alt="Voltage by Itzy" style="width:12.5%">
+  <img src="../assets/kdm.jpg" alt="Voltage by Itzy" style="width:12.5%">
+  <img src="../assets/ineverdie.jpg" alt="Voltage by Itzy" style="width:12.5%">
+  <img src="../assets/htcs.jpg" alt="Voltage by Itzy" style="width:12.5%">
+</div>
+
     <div class="userList">
-      <strong>Featured Reviews</strong>
-      <br>
-      <br>
+    <strong>Featured Reviews</strong>
+    <br>
+    <br>
+  </div>
 
 <!--  For reference later
       <div v-show="state.loaded">
@@ -18,7 +28,6 @@
       </div>
 -->
 
-  </div>
       <div v-show="state.loaded">
         <div v-for="user in userList" :key = "user.reviews">
           <div v-if="user.reviews.length != 0">
@@ -68,7 +77,7 @@ export default {
         })
 
         function getUsers() {
-            fetch('http://localhost:5000/browse', {
+            fetch('http://3.139.65.193/browse', {
                 method: "GET",
             })
             .then(resp => resp.json())
@@ -101,7 +110,7 @@ export default {
   width: 900px;
   margin: auto;
   padding: 50px 50px;
-  background: white;
+  //background: white;
   background-size: cover;
   text-align: center;
 
@@ -110,5 +119,18 @@ export default {
     flex-direction: column;
     font-size: 22px;
   }
+
+  .homeNewReleases {
+  position: relative;
+  height: 100px;
+  width: 250px;
+  margin: auto;
+  padding: 50px 50px;
+  //background: white;
+  background-size: cover;
+  text-align: center;
+}
+
+
 }
 </style>
