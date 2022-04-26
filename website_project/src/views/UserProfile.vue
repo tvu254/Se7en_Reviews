@@ -23,7 +23,7 @@
         </div>
         <br>
           <div class = "logoutButton">
-            <button v-on:click="logout">
+            <button class = "button" v-on:click="logout">
                 Logout
             </button>
         </div>
@@ -83,7 +83,6 @@ export default {
     // ?: youtube links? if song, link + lyrics, maybe at genius? USE MY BOT CODE WITH YOUTUBE-DL - show auto-fo>
     // ?: album art / artist / relevant --> store image url, if not loaded = blank
     // ?: search
-    // ?: multiple reviews being edited breaks --> replaces wrong review I think
 
 
     // eventually:
