@@ -16,25 +16,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # routes
 @app.route("/")
-@app.route("/home", methods = ['GET', 'POST'])
+@app.route("/home")
 def Home():
-    # get item from dynamodb table 'Users'
-    userInfoJSON = request.json
-    userInfo = dict(userInfoJSON)
-    print("userInfo")
-    print(userInfo)
-    userID = userInfo.get("userId")
-    print(userID)
-    userTable = dynamodb.Table('Users')
+    return None
 
-    # get user from table and return json
-    user = userTable.get_item(Key = {
-        "UserID": str(userID)
-    })
-    print(user)
-    return jsonify(user)
-
-# this method is useless rn btw
 @app.route("/user/<userId>", methods = ['GET']) # GET is the default method and not required
 def userPage(userId):
     # get item from dynamodb table 'Users'
@@ -158,7 +143,7 @@ def Post():
         }
     )
 
-    return jsonify(response)
+    return response
 
 @app.route("/edit", methods = ['GET', 'POST'])
 def Edit():
@@ -205,7 +190,7 @@ def Edit():
         "UserID": userID
     })
 
-    return jsonify(user)
+    return user
 
 @app.route("/browse")
 def Browse():
@@ -222,10 +207,7 @@ def Delete():
     reviewInfo = list(reviewInfo)
 
     userID = reviewInfo[1]
-
-    # gets review number
     reviewNum = reviewInfo[0]
-    reviewNum = reviewNum[0]
     reviewNum = int(reviewNum)
 
 

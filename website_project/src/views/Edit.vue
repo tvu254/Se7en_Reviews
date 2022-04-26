@@ -3,13 +3,8 @@
   <div class = "userReviewItem">
     <div class = "reviewContext"> 
       <div class = "reviewItemContent">
-<<<<<<< HEAD
   <div @click="showOptions(review.id)">
     <form @submit.prevent="handleSubmit">
-=======
-  <div>
-    <form @submit.prevent="handleSubmit(review.id)">
->>>>>>> parent of fb1ec14 (idek it doesnt matter)
             <span>Artist -</span>
             <input type="text" class="text" v-model="state.review.artist" name="artist">
             <br>
@@ -140,32 +135,5 @@ export default {
     .reviewContext {
         font-weight: normal;
     }
-<<<<<<< HEAD
 }
-=======
-
-    input[type=text] {
-      background-color: #ececec;
-      font-family: Avenir, Helvetica, Arial, sans-serif;
-      color: #0d1424;
-      border: none;
-      font-size: 16px;  
-    }
-
-    textarea {
-      background-color: #ececec;
-      font-family: Avenir, Helvetica, Arial, sans-serif;
-      color: #0d1424;
-      border: none;
-      font-size: 16px;  
-    }
-
-    input[type=text]:focus {
-      background-color: #ececec;
-      font-family: Avenir, Helvetica, Arial, sans-serif;
-      color: #0d1424;
-      border: none;
-      font-size: 16px;   
-    }
->>>>>>> parent of fb1ec14 (idek it doesnt matter)
 </style>
