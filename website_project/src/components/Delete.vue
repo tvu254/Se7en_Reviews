@@ -1,42 +1,17 @@
 <template>
-<div v-if="edit == true" class = "userProfileReview">
   <div class = "userReviewItem">
     <div class = "reviewContext"> 
       <div class = "reviewItemContent">
-  <div>
-    <form @submit.prevent="handleSubmit(review.id)">
-            <span>Artist - &nbsp;</span>
-            <input type="text" class="text" v-model="state.review.artist" name="artist">
-            <br>
-            <span>Album - &nbsp;</span>
-            <input type="text" class="text" v-model="state.review.album" name="album">
-            <br>
-            <span>Songname - &nbsp;</span>
-            <input type="text" class="text" v-model="state.review.songname" name="songname">
+        <form @submit.prevent="handleSubmit(review.id)">
+            Are you sure you want to delete this review?
             <br>
             <br>
-            <textarea class="text" rows = "8" cols="50" v-model="state.review.content" name="content"/> 
-            <!-- <input type="text" class="text" v-model="state.review.content" name="content">-->
-            <br>
-            
-            <!-- if edited, show button, else just have back button -->
-            <button class="submitEdit">Submit Changes</button>
-
-  <!--       <div v-show="state.invalid">
-            <div class="invalid">Invalid edit to submit</div>
-          </div>
-    -->
-    </form>
+            <button v-on:click="state.confirm = false" class="submitDelete">Nah, nevermind</button> &emsp;
+            <button class="submitDelete">Confirm deletion</button>
+        </form>
+      </div>
+    </div>
   </div>
-</div>
-</div>
-</div>
-</div>
-
-<!-- for delete -->
-<div v-else>
-does this show up
-</div>
 </template>
 
 <script>
@@ -53,7 +28,7 @@ export default {
             edit: false,
             username:  '',
             review:  [],
-            invalid: false
+            confirm: true
         });
 
 
@@ -66,41 +41,76 @@ export default {
       function handleSubmit(id) {
       // scuffed because I can't call await methods without it being in a const function
       // converts review id into int, is string. Need to figure out why this happens but for now I want it fixed.
-        state.review.id = parseInt(state.review.id)
-        const data = [props.review, state.username]
+        //state.review.id = parseInt(state.review.id)
+        if(state.confirm == true) {
+            const data = [props.review.id, state.username]
+            console.log("data")
+            console.log(data)
+            deleteReview(data);
+        }
+        else {
+            resetUser(state.username)
+        }
         ctx.emit("showOptions", id);
-        console.log("data")
-        console.log(data)
-        commitReview(data);
+
       }
 
-      const commitReview = async (data) => {
-        await fetch('http://localhost:5000/edit', {
+      function deleteReview(id) {
+      // scuffed because I can't call await methods without it being in a const function
+        const data = [id, state.username]
+
+        sendDelete(data);
+      }
+
+      const sendDelete = async (data) => {
+        await fetch('http://localhost:5000/delete', {
         method: 'POST',
-        body: JSON.stringify({ data }),     
+        body: JSON.stringify({ data }),
         headers: {
             'Content-type': 'application/json',
         }
         })
         .then((response) => response.json())        // flask returns a response object
         .then(function (user) {
-            console.log(user);        // error catch is based on response. Not sure if works --> Also also needs to update the state-user
-            setUser(user) 
+            console.log(user);        // error catch is based on response. Not sure if works --> Also also needs>
+            setUser(user)
         })
         .catch(function (error) {
-          console.warn('Something went horribly wrong -->', error); 
+          console.warn('Something went horribly wrong -->', error);
         });
       }
 
-      // for updating state-user according to database 
+        const resetUser = async (userId) => {
+            await fetch('http://localhost:5000/home', {
+            method: 'POST',
+            body: JSON.stringify({ userId }),
+            headers: {
+                'Content-type': 'application/json',
+            }
+            })
+            .then((response) => response.json())        // flask returns a response object
+            .then(function (user) {
+                console.log("user")
+                console.log(user);        // error catch is based on response. Not sure if works --> Also also needs>
+                setUser(user)
+            })
+            .catch(function (error) {
+            console.warn('Something went horribly wrong -->', error);
+            });
+        }
+
+      // for updating state-user according to database
       const setUser = async (user) => {
         await store.dispatch('User/setUser', user);
         console.log(user.Item.username)
       }
+
         return {
             handleSubmit,
-            commitReview,
+            deleteReview,
             setUser,
+            sendDelete,
+            resetUser,
             state
         };
     },
