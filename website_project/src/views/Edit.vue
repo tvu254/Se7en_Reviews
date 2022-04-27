@@ -19,6 +19,7 @@
             <br>
             
             <!-- if edited, show button, else just have back button -->
+            <br>
             <button class="button">Submit Changes</button>
 
   <!--       <div v-show="state.invalid">
