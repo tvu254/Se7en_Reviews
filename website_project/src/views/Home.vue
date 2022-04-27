@@ -70,7 +70,7 @@ export default {
         })
 
         function getUsers() {
-            fetch('http://localhost:5000/browse', {
+            fetch('http://3.133.58.37:5000/browse', {
                 method: "GET",
             })
             .then(resp => resp.json())

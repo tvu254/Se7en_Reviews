@@ -265,4 +265,4 @@ def adminPage():
     
 
 if __name__ == '__main__':  # true only if run directly (not through flask run, from what I can tell)
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000)
