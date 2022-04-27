@@ -76,7 +76,7 @@ export default {
       }
 
       const commitReview = async (data) => {
-        await fetch('http://localhost:5000/edit', {
+        await fetch('http://3.133.58.37:5000/edit', {
         method: 'POST',
         body: JSON.stringify({ data }),     
         headers: {

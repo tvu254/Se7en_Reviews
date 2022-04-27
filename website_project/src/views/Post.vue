@@ -47,7 +47,7 @@ export default {
       }
 
       const sendDelete = async (data) => {
-        await fetch('http://localhost:5000/delete', {
+        await fetch('http://3.133.58.37:5000/delete', {
         method: 'POST',
         body: JSON.stringify({ data }),     
         headers: {
