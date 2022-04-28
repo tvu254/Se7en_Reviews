@@ -1,5 +1,7 @@
 <template>
   <form class = "createReviewPanel" @submit.prevent = "createNewReview" :class="{ '--exceeded': newReviewCharacterCt > 2000 }">  <!-- stop submit button when > 2000 -->
+
+
     <div class="createReviewPanelSubmit">
       <div class = "createReviewType">
 

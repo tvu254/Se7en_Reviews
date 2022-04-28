@@ -77,8 +77,6 @@ export default {
 
 
     // 9: Add security to passwords
-    // ?: Be able to edit specific values of your review - could be added as a separate page, linked to by both >
-
     // ?: require first two sections on post to prevent garbage
     // ?: youtube links? if song, link + lyrics, maybe at genius? USE MY BOT CODE WITH YOUTUBE-DL - show auto-fo>
     // ?: album art / artist / relevant --> store image url, if not loaded = blank
@@ -94,13 +92,14 @@ export default {
     // /user/userID is useless rn btw
 
     // BY PRESENTATION DAY
-    // else: Deploy app as website, domain name and ssl certs
-    // 5.6: Add stats to user like average rating, past likes, total likes, etc. I think we should remove follow>
+    // ssl certs
+    // 5.6: Add stats to user like average rating, past likes, total likes, etc.
     // ?: Order the reviews in reverse-id order so the newest is at front
     // keep me signed in
     // refresh still logs you out
     // Make it look really nice
     // if read more not necessary, dont put. if (110 long) for example
+    // dont allow sign-in to be clicked if empty
 
       const state = reactive({
         followers: 0,
