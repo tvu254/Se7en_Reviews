@@ -5,7 +5,7 @@
     </div>
     <div class = "userReviewsWrapper">
         <div class = "reviewName">
-            Your Reviews:
+            {{ user.Item.UserID }}'s Reviews:
         </div> 
 
         <div v-if="user.Item.reviews.length != 0">
@@ -47,7 +47,7 @@ export default {
       }
 
       const sendDelete = async (data) => {
-        await fetch('http://3.133.58.37:5000/post', {
+        await fetch('http://3.133.58.37:5000/delete', {
         method: 'POST',
         body: JSON.stringify({ data }),     
         headers: {
@@ -107,7 +107,7 @@ export default {
 
       const saveReview = async (review) => {
         console.log(review)
-        await fetch('http://3.133.58.37:5000/post', {
+        await fetch('http://localhost:5000/post', {
           method: 'POST',
           body: JSON.stringify({ review }),
           headers: {

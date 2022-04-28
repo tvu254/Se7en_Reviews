@@ -6,8 +6,8 @@
             Are you sure you want to delete this review?
             <br>
             <br>
-            <button v-on:click="state.confirm = false" class="button">Nah, nevermind</button> &emsp;
-            <button class="button">Confirm deletion</button>
+            <button v-on:click="state.confirm = false" class="submitDelete">Nah, nevermind</button> &emsp;
+            <button class="submitDelete">Confirm deletion</button>
         </form>
       </div>
     </div>
