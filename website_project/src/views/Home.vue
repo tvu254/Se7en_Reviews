@@ -9,11 +9,11 @@
 
     <div class="homeReleases">
      <h1>Upcoming Releases</h1>
-  <img src="../assets/zeit.jpg" alt="Zeit by Ramnstein" style="width:12.5%">
-  <img src="../assets/voltage.jpg" alt="Voltage by Itzy" style="width:12.5%">
-  <img src="../assets/kdm.jpg" alt="Krewe De L'amour by Cane Hill" style="width:12.5%">
-  <img src="../assets/ineverdie.jpg" alt="I NEVER DIE by (G)I-dle" style="width:12.5%">
-  <img src="../assets/htcs.jpg" alt="Head in the Clouds Forever by 88rising" style="width:12.5%">
+  <img src="../assets/zeit.jpg" alt="Zeit by Ramnstein" title= "Zeit by Ramnstein" style="width:12.5%; margin: 0px 5px">
+  <img src="../assets/voltage.jpg" alt="Voltage by Itzy" title= "Voltage by Itzy" style="width:12.5%; margin: 0px 5px">
+  <img src="../assets/kdm.jpg" alt="Krewe De L'amour by Cane Hill" title= "Krewe De L'amour by Cane Hill" style="width:12.5%; margin: 0px 5px">
+  <img src="../assets/ineverdie.jpg" alt="I NEVER DIE by (G)I-dle" title= "I NEVER DIE by (G)I-dle" style="width:12.5%; margin: 0px 5px">
+  <img src="../assets/htcs.jpg" alt="Head in the Clouds Forever by 88rising" title= "Head in the Clouds Forever by 88rising" style="width:12.5%; margin: 0px 5px">
 </div>
 
     <div class="userList">
@@ -109,10 +109,10 @@ export default {
 
 .homeAnnouncement {
   position: relative;
-  height: 300px;
+  height: 150px;
   width: 900px;
   margin: auto;
-  padding: 50px 50px;
+  //padding: 50px 50px;
   background-size: cover;
   text-align: center;
 
@@ -132,7 +132,7 @@ export default {
 .homeReleases {
   position: center;
   margin: auto;
-  padding: 50px 50px;
+  padding: 100px 50px;
   text-align: center;
 }
 </style>
