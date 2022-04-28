@@ -93,14 +93,13 @@ export default {
 
     // BY PRESENTATION DAY
     // ssl certs
-    // 5.6: Add stats to user like average rating, past likes, total likes, etc. I think we should remove follow>
+    // 5.6: Add stats to user like average rating, past likes, total likes, etc.
     // ?: Order the reviews in reverse-id order so the newest is at front
     // keep me signed in
     // refresh still logs you out
     // Make it look really nice
     // if read more not necessary, dont put. if (110 long) for example
     // dont allow sign-in to be clicked if empty
-    // edit does not show the whole content box
 
       const state = reactive({
         followers: 0,

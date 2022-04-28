@@ -14,8 +14,8 @@
             <span>Songname - &nbsp;</span>
             <input type="text" class="text" v-model="state.review.songname" name="songname">
             <br>
-            <span>Content -</span>
-            <input type="text" class="text" v-model="state.review.content" name="content">
+            <br>
+            <textarea class="text" rows = "8" cols="50" v-model="state.review.content" name="content"/>
             <br>
             
             <!-- if edited, show button, else just have back button -->
@@ -33,10 +33,6 @@
 </div>
 </div>
 
-<!-- for delete -->
-<div v-else>
-does this show up
-</div>
 </template>
 
 <script>
