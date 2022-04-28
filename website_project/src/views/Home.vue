@@ -2,17 +2,18 @@
   <div class="homeAnnouncement">
     <h1><strong>Welcome to uReview!</strong></h1>
     <h2> This is the uReview alpha version. Feel free to explore the features and leave a review of your favorite artist, album or song :) &nbsp;
-         Comments, ratings, search, as well as stylistic updates are coming soon. Thank you for visiting!
+         Comments, ratings, search, review editing, as well as stylistic updates are coming soon. Thank you for visiting!
     </h2>
     <br>
+  </div>
 
     <div class="homeReleases">
      <h1>Upcoming Releases</h1>
   <img src="../assets/zeit.jpg" alt="Zeit by Ramnstein" style="width:12.5%">
   <img src="../assets/voltage.jpg" alt="Voltage by Itzy" style="width:12.5%">
-  <img src="../assets/kdm.jpg" alt="Voltage by Itzy" style="width:12.5%">
-  <img src="../assets/ineverdie.jpg" alt="Voltage by Itzy" style="width:12.5%">
-  <img src="../assets/htcs.jpg" alt="Voltage by Itzy" style="width:12.5%">
+  <img src="../assets/kdm.jpg" alt="Krewe De L'amour by Cane Hill" style="width:12.5%">
+  <img src="../assets/ineverdie.jpg" alt="I NEVER DIE by (G)I-dle" style="width:12.5%">
+  <img src="../assets/htcs.jpg" alt="Head in the Clouds Forever by 88rising" style="width:12.5%">
 </div>
 
     <div class="userList">
@@ -112,7 +113,6 @@ export default {
   width: 900px;
   margin: auto;
   padding: 50px 50px;
-  background: white;
   background-size: cover;
   text-align: center;
 
@@ -127,5 +127,12 @@ export default {
     text-decoration: underline;
     font-size: 28px;
   }
+}
+
+.homeReleases {
+  position: center;
+  margin: auto;
+  padding: 50px 50px;
+  text-align: center;
 }
 </style>
