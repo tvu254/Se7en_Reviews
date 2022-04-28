@@ -28,7 +28,10 @@
 
       <div class = "loginRegister" v-else>
         <router-link to="/login">
-          Login / Register
+          <span>Login</span>
+        </router-link> /
+        <router-link to="/register">
+          <span>Register</span>
         </router-link>
       </div>
     </nav>
@@ -115,7 +118,7 @@ export default {
       font-weight: normal;
       font-size: 18px;
       align-items: center;
-      &:hover {
+      span:hover {
         transform: scale(1.025, 1.025);
         filter: brightness(150%);
       }
