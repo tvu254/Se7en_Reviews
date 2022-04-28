@@ -2,7 +2,7 @@
   <div class="homeAnnouncement">
     <h1><strong>Welcome to uReview!</strong></h1>
     <h2> This is the uReview alpha version. Feel free to explore the features and leave a review of your favorite artist, album or song :) &nbsp;
-         Comments, ratings, search, review editing, as well as stylistic updates are coming soon. Thank you for visiting!
+         Comments, ratings, search, as well as stylistic updates are coming soon. Thank you for visiting!
     </h2>
     <br>
 
